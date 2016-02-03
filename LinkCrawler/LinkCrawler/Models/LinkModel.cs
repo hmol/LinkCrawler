@@ -43,7 +43,7 @@ namespace LinkCrawler.Models
 
         public override string ToString()
         {
-            return string.Format("{0}   {1}   {2}",Url, StatusCode, StatusCodeEnum);
+            return string.Format("{0}   {1}   {2}",StatusCode, StatusCodeEnum, Url);
         }
     }
 }
