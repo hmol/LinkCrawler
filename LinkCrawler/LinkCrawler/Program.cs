@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LinkCrawler
 {
@@ -10,6 +6,9 @@ namespace LinkCrawler
     {
         static void Main(string[] args)
         {
+            var crawler = new LinkCrawler();
+            crawler.CrawlLinks();
+            Console.ReadLine();
         }
     }
 }

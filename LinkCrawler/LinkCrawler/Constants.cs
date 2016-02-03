@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace LinkCrawler
 {
-    public class Constants
+    public static class Constants
     {
-        public class AppSettings
+        public static class AppSettings
         {
             public const string BaseUrl = "BaseUrl";
+            public const string WriteToFile = "WriteToFile";
         }
 
-        public class LinkAttributes
+        public static class Html
         {
             public const string Mailto = "mailto";
             public const string Href = "href";
