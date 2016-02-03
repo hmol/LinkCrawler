@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
 using System.Text;
-using HtmlAgilityPack;
+using LinkCrawler.Models;
+using LinkCrawler.Utils.Helpers;
 
 namespace LinkCrawler
 {
@@ -15,6 +13,7 @@ namespace LinkCrawler
         public string FilePath;
         public static List<string> VisitedUrlList;
         public StringBuilder StringBuilder;
+
         public LinkCrawler()
         {
             BaseUrl = Settings.BaseUrl;
@@ -29,88 +28,43 @@ namespace LinkCrawler
             CrawlLink(BaseUrl);
         }
 
-        public string GetMarkup(string url)
-        {
-            try
-            {
-                string html;
-
-                var request = (HttpWebRequest) WebRequest.Create(url);
-                using (var response = (HttpWebResponse) request.GetResponse())
-                {
-                    Console.WriteLine(url + " ==> " + response.StatusCode);
-                    if (response.StatusCode != HttpStatusCode.OK)
-                        return string.Empty;
-
-                    using (var stream = response.GetResponseStream())
-                    using (var reader = new StreamReader(stream))
-                    {
-                        html = reader.ReadToEnd();
-                    }
-                }
-
-                return html;
-            }
-            catch (WebException ex)
-            {
-                Console.WriteLine(url + " ==> " + (ex.Response as HttpWebResponse).StatusCode);
-                return string.Empty;
-            }
-        }
         public void CrawlLink(string crawlUrl)
         {
-            
-            try
-            {
-                var html = GetMarkup(crawlUrl);
-                var linksFoundInMarkup = GetLinks(html);
+            var linkItem = new LinkModel(crawlUrl);
+            linkItem.SendRequestAndGetMarkup();
+            Console.WriteLine(linkItem);
+            if (!linkItem.IsSucess)
+                return;
 
-                foreach (var url in linksFoundInMarkup)
-                {
-                    if(VisitedUrlList.Contains(url))
-                        continue;
+            var linksFoundInMarkup = GetListOfUrls(linkItem.Markup);
 
-                    VisitedUrlList.Add(url);
-                    CrawlLink(url);
-                }
-            }
-            catch (Exception ex)
+            foreach (var url in linksFoundInMarkup)
             {
-                Console.WriteLine("ERROR: " + ex.Message);
+                if (VisitedUrlList.Contains(url))
+                    continue;
+
+                VisitedUrlList.Add(url);
+                CrawlLink(url);
             }
         }
 
-        private static HtmlNodeCollection GetHtmlNodes(string html)
+        public List<string> GetListOfUrls(string markup)
         {
-            var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(html);
-            return htmlDoc.DocumentNode.SelectNodes(Constants.Html.LinkSearchPattern);
-        }
-        private List<string> GetLinks(string html)
-        {
-            if(string.IsNullOrEmpty(html))
-                return new List<string>();
-
-            var nodes = GetHtmlNodes(html);
-
-            if(nodes == null || !nodes.Any())
-                return new List<string>();
-
-            var urlList = nodes.Select(x => x.GetAttributeValue(Constants.Html.Href, string.Empty).TrimEnd('/')).ToList();
+            var urlList = StringHelpers.GetUrlListFromMarkup(markup);
             var cleanUrlList = new List<string>();
 
             foreach (var url in urlList)
             {
-                if (!url.StartsWith("/")
-                    && !url.StartsWith(BaseUrl))
+                Uri parsedUri;
+                if (!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out parsedUri))
                     continue;
 
-                if (url.StartsWith("/"))
+                if(!parsedUri.IsAbsoluteUri)
                 {
                     var newUrl = BaseUrl + url;
                     cleanUrlList.Add(newUrl);
                 }
-                else
+                else if (parsedUri.AbsoluteUri.StartsWith(BaseUrl))
                 {
                     cleanUrlList.Add(url);
                 }
