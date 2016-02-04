@@ -33,6 +33,7 @@ namespace LinkCrawler
             var linkItem = new LinkModel(crawlUrl);
             linkItem.SendRequestAndGetMarkup();
             Console.WriteLine(linkItem);
+
             if (!linkItem.IsSucess)
                 return;
 
