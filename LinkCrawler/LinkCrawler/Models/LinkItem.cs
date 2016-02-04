@@ -4,46 +4,40 @@ using System.Net;
 
 namespace LinkCrawler.Models
 {
-    public class LinkModel
+    public class LinkItem
     {
-        public string Markup { get; set; }
-        public System.Net.HttpStatusCode StatusCodeEnum { get; set; }
-        public int StatusCode { get { return (int) StatusCodeEnum; } }
-        public bool IsSucess { get { return StatusCodeEnum == HttpStatusCode.OK; } }
         public string Url;
-        public LinkModel(string url)
+        public LinkItem(string url)
         {
             Url = url;
         }
 
-        public void SendRequestAndGetMarkup()
+        public ResponseItem SendRequestAndGetMarkup()
         {
+            var responseItem = new ResponseItem(Url);
+
             try
             {
                 var request = (HttpWebRequest)WebRequest.Create(Url);
                 using (var response = (HttpWebResponse)request.GetResponse())
                 {
-                    StatusCodeEnum = response.StatusCode;
+                    responseItem.StatusCode = response.StatusCode;
                     if (response.StatusCode != HttpStatusCode.OK)
-                        return;
+                        return responseItem;
 
                     using (var stream = response.GetResponseStream())
                     using (var reader = new StreamReader(stream))
                     {
-                        Markup = reader.ReadToEnd();
+                        responseItem.Markup = reader.ReadToEnd();
                     }
                 }
             }
             catch (WebException ex)
             {
                 var errorStatus = (ex.Response as HttpWebResponse).StatusCode;
-                StatusCodeEnum = errorStatus;
+                responseItem.StatusCode = errorStatus;
             }
-        }
-
-        public override string ToString()
-        {
-            return string.Format("{0}   {1}   {2}",StatusCode, StatusCodeEnum, Url);
+            return responseItem;
         }
     }
 }

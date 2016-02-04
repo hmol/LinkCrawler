@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using LinkCrawler.Models;
 using LinkCrawler.Utils.Helpers;
@@ -28,24 +29,28 @@ namespace LinkCrawler
             CrawlLink(BaseUrl);
         }
 
-        public void CrawlLink(string crawlUrl)
+        public void CrawlLink(string crawlUrl, string referrerUrl = "")
         {
-            var linkItem = new LinkModel(crawlUrl);
-            linkItem.SendRequestAndGetMarkup();
-            Console.WriteLine(linkItem);
+            var linkItem = new LinkItem(crawlUrl);
+            var responseItem = linkItem.SendRequestAndGetMarkup();
 
-            if (!linkItem.IsSucess)
+            Console.WriteLine(responseItem);
+
+            if (!responseItem.IsSucess)
+            {
+                Console.WriteLine("Reffered in: " + referrerUrl);
                 return;
+            }
 
-            var linksFoundInMarkup = GetListOfUrls(linkItem.Markup);
-
+            var linksFoundInMarkup = GetListOfUrls(responseItem.Markup);
+            
             foreach (var url in linksFoundInMarkup)
             {
                 if (VisitedUrlList.Contains(url))
                     continue;
 
                 VisitedUrlList.Add(url);
-                CrawlLink(url);
+                CrawlLink(url, crawlUrl);
             }
         }
 
