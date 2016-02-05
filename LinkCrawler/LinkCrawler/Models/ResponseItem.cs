@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 namespace LinkCrawler.Models
 {
@@ -23,7 +17,7 @@ namespace LinkCrawler.Models
 
         public override string ToString()
         {
-            return string.Format("{0}   {1}   {2}", StatusCode, StatusCodeInteger, Url);
+            return string.Format("{0}    {1}    {2}", StatusCodeInteger, StatusCode, Url);
         }
     }
 }
