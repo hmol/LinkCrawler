@@ -52,7 +52,7 @@ namespace LinkCrawler
 
         public List<string> GetListOfUrls(string markup)
         {
-            var urlList = StringHelpers.GetUrlListFromMarkup(markup);
+            var urlList = StringHelpers.GetUrlListFromMarkup(markup, Settings.CheckImages);
             var cleanUrlList = new List<string>();
 
             foreach (var url in urlList)

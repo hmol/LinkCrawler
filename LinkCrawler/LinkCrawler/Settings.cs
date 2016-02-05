@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using LinkCrawler.Utils.Extensions;
 
 namespace LinkCrawler
 {
@@ -7,6 +8,11 @@ namespace LinkCrawler
         public static string BaseUrl
         {
             get { return ConfigurationManager.AppSettings[Constants.AppSettings.BaseUrl]; }
+        }
+
+        public static bool CheckImages
+        {
+            get { return ConfigurationManager.AppSettings[Constants.AppSettings.CheckImages].ToBool(); }
         }
     }
 }
