@@ -10,16 +10,12 @@ namespace LinkCrawler
     public class LinkCrawler
     {
         public string BaseUrl;
-        public bool WriteToFile;
-        public string FilePath;
         public static List<string> VisitedUrlList;
         public StringBuilder StringBuilder;
 
         public LinkCrawler()
         {
             BaseUrl = Settings.BaseUrl;
-            FilePath = Settings.WriteToFile;
-            WriteToFile = !string.IsNullOrEmpty(Settings.WriteToFile);
             VisitedUrlList = new List<string>();
             StringBuilder = new StringBuilder();
         }

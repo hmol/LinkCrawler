@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Security.Policy;
+using LinkCrawler.Models;
 
 namespace LinkCrawler
 {
     class Program
     {
-        static void Main(string[] args)
+       static void Main(string[] args)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();

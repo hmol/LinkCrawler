@@ -18,11 +18,13 @@ namespace LinkCrawler.Models
 
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create(Url);
-                using (var response = (HttpWebResponse)request.GetResponse())
+                var request = (HttpWebRequest) WebRequest.Create(Url);
+                using (var response = (HttpWebResponse) request.GetResponse())
                 {
                     responseItem.StatusCode = response.StatusCode;
-                    if (response.StatusCode != HttpStatusCode.OK)
+
+                    if (response.StatusCode != HttpStatusCode.OK 
+                        || !response.ContentType.StartsWith(Constants.Response.ContentTypeTextHtml))
                         return responseItem;
 
                     using (var stream = response.GetResponseStream())
@@ -32,9 +34,13 @@ namespace LinkCrawler.Models
                     }
                 }
             }
-            catch (WebException ex)
+            catch (UriFormatException)
             {
-                var errorStatus = (ex.Response as HttpWebResponse).StatusCode;
+                responseItem.StatusCode = HttpStatusCode.BadRequest;
+            }
+            catch (WebException webException)
+            {
+                var errorStatus = (webException.Response as HttpWebResponse).StatusCode;
                 responseItem.StatusCode = errorStatus;
             }
             return responseItem;
