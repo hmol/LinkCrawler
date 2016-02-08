@@ -3,7 +3,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Security.Policy;
+<<<<<<< Updated upstream
 using LinkCrawler.Models;
+=======
+using RestSharp;
+>>>>>>> Stashed changes
 
 namespace LinkCrawler
 {
