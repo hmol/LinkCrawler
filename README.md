@@ -1,5 +1,5 @@
 # LinkCrawler
-Will crawl the given webpage for image-tags and hyperlinks. If any of them is not working, an message will be sent to slack.
+Will crawl the given webpage for image-tags and hyperlinks. If some of them is not working, an message will be sent to slack.
 
 ## App.Settings
 
