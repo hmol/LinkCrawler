@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Security.Policy;
-using LinkCrawler.Models;
+using RestSharp;
 
 namespace LinkCrawler
 {
     class Program
     {
+        static void Main2(string[] args)
+        {
+            var restClient = new RestClient("http://www.vg.no");
+            var restRequest = new RestRequest(Method.GET);
+            var restResponse = restClient.Execute(restRequest);
+        }
+
        static void Main(string[] args)
         {
             var stopwatch = new Stopwatch();

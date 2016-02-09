@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using LinkCrawler.Models;
 using LinkCrawler.Utils.Helpers;
 
@@ -9,36 +7,29 @@ namespace LinkCrawler
 {
     public class LinkCrawler
     {
-        public string BaseUrl;
         public static List<string> VisitedUrlList;
-        public StringBuilder StringBuilder;
 
         public LinkCrawler()
         {
-            BaseUrl = Settings.BaseUrl;
             VisitedUrlList = new List<string>();
-            StringBuilder = new StringBuilder();
         }
 
         public void CrawlLinks()
         {
-            CrawlLink(BaseUrl);
+            CrawlLink(Settings.Instance.BaseUrl);
         }
 
-        public void CrawlLink(string crawlUrl, string referrerUrl = "")
+        private void CrawlLink(string crawlUrl, string referrerUrl = "")
         {
-            var linkItem = new LinkItem(crawlUrl);
-            var responseItem = linkItem.SendRequestAndGetMarkup();
+            var requestModel = new RequestModel(crawlUrl);
+            var responseModel = requestModel.SendRequest();
 
-            Console.WriteLine(responseItem);
+            WriteOutput(responseModel, referrerUrl);
 
-            if (!responseItem.IsSucess)
-            {
-                Console.WriteLine("Reffered in: " + referrerUrl);
+            if(!responseModel.IsSucess || !requestModel.IsInternalUrl || !responseModel.IsHtmlDocument)
                 return;
-            }
 
-            var linksFoundInMarkup = GetListOfUrls(responseItem.Markup);
+            var linksFoundInMarkup = GetListOfUrls(responseModel.Markup);
             
             foreach (var url in linksFoundInMarkup)
             {
@@ -52,27 +43,55 @@ namespace LinkCrawler
 
         public List<string> GetListOfUrls(string markup)
         {
-            var urlList = StringHelpers.GetUrlListFromMarkup(markup, Settings.CheckImages);
-            var cleanUrlList = new List<string>();
+            var urlList = MarkupHelpers.GetUrlListFromMarkup(markup, Settings.Instance.CheckImages);
+            var correctUrlList = new List<string>();
 
             foreach (var url in urlList)
             {
                 Uri parsedUri;
-                if (!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out parsedUri))
+                if (!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out parsedUri)
+                    || url.StartsWith(Constants.Html.Mailto)
+                    || url.StartsWith(Constants.Html.Tel))
                     continue;
 
                 if(!parsedUri.IsAbsoluteUri)
                 {
-                    var newUrl = BaseUrl + url;
-                    cleanUrlList.Add(newUrl);
+                    var newUrl = string.Concat(Settings.Instance.BaseUrl, url);
+                    correctUrlList.Add(newUrl);
                 }
-                else if (parsedUri.AbsoluteUri.StartsWith(BaseUrl))
+                else
                 {
-                    cleanUrlList.Add(url);
+                    correctUrlList.Add(url);
                 }
+
             }
 
-            return cleanUrlList;
+            return correctUrlList;
         }
+
+        private void WriteOutput(ResponseModel responseModel, string referrerUrl)
+        {
+            Console.WriteLine(responseModel.ToString());
+
+            if (!responseModel.IsSucess)
+            {
+                Console.WriteLine("Reffered in: " + referrerUrl);
+                SendToSlack(responseModel,referrerUrl);
+            }
+        }
+
+        private void SendToSlack(ResponseModel responseModel, string referrerUrl)
+        {
+            //var errorUrlText = "There is a link not working. The links points to this url: <" + responseItem.Url + "|" + responseItem.Url + ">. " +
+            //                       "The link is placed on this page: <" + referrerUrl + "|" + referrerUrl + ">";
+
+            //var client = new RestClient("https://hooks.slack.com/");
+            //var request = new RestRequest("/services/T024FQG21/B0LAVJT4H/lkk9qCg4pM2dC8yK8wwXFkLH", Method.POST);
+            //request.RequestFormat = DataFormat.Json;
+            //request.AddBody(new { text = errorUrlText });
+
+            //client.Execute(request);
+        }
+
     }
 }

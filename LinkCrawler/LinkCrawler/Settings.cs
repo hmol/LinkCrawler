@@ -3,14 +3,25 @@ using LinkCrawler.Utils.Extensions;
 
 namespace LinkCrawler
 {
-    public static class Settings
+    public class Settings
     {
-        public static string BaseUrl
+        private static Settings _instance;
+        public static Settings Instance
+        {
+            get
+            {
+                if (_instance != null)
+                    return _instance;
+                return _instance = new Settings();
+            }
+        }
+
+        public string BaseUrl
         {
             get { return ConfigurationManager.AppSettings[Constants.AppSettings.BaseUrl]; }
         }
 
-        public static bool CheckImages
+        public bool CheckImages
         {
             get { return ConfigurationManager.AppSettings[Constants.AppSettings.CheckImages].ToBool(); }
         }
