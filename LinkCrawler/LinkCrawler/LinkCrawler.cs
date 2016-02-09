@@ -10,10 +10,12 @@ namespace LinkCrawler
     public class LinkCrawler
     {
         public static List<string> VisitedUrlList;
+        public static SlackClient SlackClient;
 
         public LinkCrawler()
         {
             VisitedUrlList = new List<string>();
+            SlackClient = new SlackClient();
         }
 
         public void CrawlLinks()
@@ -78,7 +80,7 @@ namespace LinkCrawler
             if (!responseModel.IsSucess)
             {
                 Console.WriteLine("Reffered in: " + referrerUrl);
-                SlackClient.Instance.NotifySlack(responseModel.Url, referrerUrl);
+                SlackClient.NotifySlack(responseModel.Url, referrerUrl);
             }
         }
     }

@@ -4,17 +4,6 @@ namespace LinkCrawler.Utils.Clients
 {
     public class SlackClient
     {
-        private static SlackClient _instance;
-        public static SlackClient Instance
-        {
-            get
-            {
-                if (_instance != null)
-                    return _instance;
-                return _instance = new SlackClient();
-            }
-        }
-
         public const string MessageFormat = "There is a link not working. The links points to this url: {0}. " +
                                              "The link is placed on this page: {1}";
 
