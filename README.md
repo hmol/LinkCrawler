@@ -1,5 +1,5 @@
 # LinkCrawler
-Will crawl the given webpage for image-tags and hyperlinks. If some of them is not working, an message will be sent to slack.
+Simple console application that will crawl the given webpage for image-tags and hyperlinks. If some of them is not working, an message will be sent to slack. Also information on all urls will be written to console output.
 
 ## App.Settings
 
