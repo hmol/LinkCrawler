@@ -12,3 +12,4 @@ Simple console application that will crawl the given webpage for image-tags and 
 | ```Slack.WebHook.Bot.IconEmoji``` | Custom Emoji for slack bot  	       |
  
      
+Read more about Slack incoming webhooks: https://api.slack.com/incoming-webhooks
