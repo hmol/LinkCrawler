@@ -14,4 +14,5 @@ Simple console application that will crawl the given webpage for image-tags and 
      
 Read more about Slack incoming webhooks: https://api.slack.com/incoming-webhooks
 
+Example run on www.github.com:
 ![Example run on www.github.com](http://henrikm.com/content/images/2016/Feb/linkcrawler.png "Example run on www.github.com")
