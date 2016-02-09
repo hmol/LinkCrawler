@@ -7,22 +7,16 @@ namespace LinkCrawler
 {
     public class LinkCrawler
     {
-        public string BaseUrl;
         public static List<string> VisitedUrlList;
 
         public LinkCrawler()
         {
-<<<<<<< Updated upstream
-            BaseUrl = Settings.BaseUrl;
-=======
-            BaseUrl = Settings.Instance.BaseUrl;
->>>>>>> Stashed changes
             VisitedUrlList = new List<string>();
         }
 
         public void CrawlLinks()
         {
-            CrawlLink(BaseUrl);
+            CrawlLink(Settings.Instance.BaseUrl);
         }
 
         private void CrawlLink(string crawlUrl, string referrerUrl = "")
@@ -49,13 +43,8 @@ namespace LinkCrawler
 
         public List<string> GetListOfUrls(string markup)
         {
-<<<<<<< Updated upstream
-            var urlList = StringHelpers.GetUrlListFromMarkup(markup, Settings.CheckImages);
-            var cleanUrlList = new List<string>();
-=======
-            var urlList = StringHelpers.GetUrlListFromMarkup(markup);
+            var urlList = MarkupHelpers.GetUrlListFromMarkup(markup, Settings.Instance.CheckImages);
             var correctUrlList = new List<string>();
->>>>>>> Stashed changes
 
             foreach (var url in urlList)
             {
@@ -67,7 +56,7 @@ namespace LinkCrawler
 
                 if(!parsedUri.IsAbsoluteUri)
                 {
-                    var newUrl = string.Concat(BaseUrl, url);
+                    var newUrl = string.Concat(Settings.Instance.BaseUrl, url);
                     correctUrlList.Add(newUrl);
                 }
                 else

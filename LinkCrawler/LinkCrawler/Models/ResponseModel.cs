@@ -16,13 +16,15 @@ namespace LinkCrawler.Models
         {
             StatusCode = restResponse.StatusCode;
             Url = url;
+            if(StatusCode != HttpStatusCode.OK)
+                return;
             Markup = restResponse.Content;
             IsHtmlDocument = restResponse.ContentType.StartsWith(Constants.Html.HtmlContentType);
         }
 
         public override string ToString()
         {
-            return string.Format("{0}   {1}   {2}", StatusCode, StatusCodeNumber, Url);
+            return string.Format("{0}   {1}   {2}", StatusCodeNumber, StatusCode, Url);
         }
     }
 }
