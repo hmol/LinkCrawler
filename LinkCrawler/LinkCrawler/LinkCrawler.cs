@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using LinkCrawler.Models;
+using LinkCrawler.Utils;
+using LinkCrawler.Utils.Clients;
 using LinkCrawler.Utils.Helpers;
 
 namespace LinkCrawler
@@ -24,7 +26,7 @@ namespace LinkCrawler
             var requestModel = new RequestModel(crawlUrl);
             var responseModel = requestModel.SendRequest();
 
-            WriteOutput(responseModel, referrerUrl);
+            WriteOutputAndNotifySlack(responseModel, referrerUrl);
 
             if(!responseModel.IsSucess || !requestModel.IsInternalUrl || !responseModel.IsHtmlDocument)
                 return;
@@ -69,29 +71,15 @@ namespace LinkCrawler
             return correctUrlList;
         }
 
-        private void WriteOutput(ResponseModel responseModel, string referrerUrl)
+        private void WriteOutputAndNotifySlack(ResponseModel responseModel, string referrerUrl)
         {
             Console.WriteLine(responseModel.ToString());
 
             if (!responseModel.IsSucess)
             {
                 Console.WriteLine("Reffered in: " + referrerUrl);
-                SendToSlack(responseModel,referrerUrl);
+                SlackClient.Instance.NotifySlack(responseModel.Url, referrerUrl);
             }
         }
-
-        private void SendToSlack(ResponseModel responseModel, string referrerUrl)
-        {
-            //var errorUrlText = "There is a link not working. The links points to this url: <" + responseItem.Url + "|" + responseItem.Url + ">. " +
-            //                       "The link is placed on this page: <" + referrerUrl + "|" + referrerUrl + ">";
-
-            //var client = new RestClient("https://hooks.slack.com/");
-            //var request = new RestRequest("/services/T024FQG21/B0LAVJT4H/lkk9qCg4pM2dC8yK8wwXFkLH", Method.POST);
-            //request.RequestFormat = DataFormat.Json;
-            //request.AddBody(new { text = errorUrlText });
-
-            //client.Execute(request);
-        }
-
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using LinkCrawler.Utils;
 using RestSharp;
 
 namespace LinkCrawler.Models
@@ -6,7 +7,7 @@ namespace LinkCrawler.Models
     public class ResponseModel
     {
         public string Markup { get; set; }
-        public System.Net.HttpStatusCode StatusCode { get; set; }
+        public HttpStatusCode StatusCode { get; set; }
         public int StatusCodeNumber { get { return (int)StatusCode; } }
         public bool IsSucess { get { return StatusCode == HttpStatusCode.OK; } }
         public bool IsHtmlDocument { get; set; }
@@ -19,7 +20,7 @@ namespace LinkCrawler.Models
             if(StatusCode != HttpStatusCode.OK)
                 return;
             Markup = restResponse.Content;
-            IsHtmlDocument = restResponse.ContentType.StartsWith(Constants.Html.HtmlContentType);
+            IsHtmlDocument = restResponse.ContentType.StartsWith(Constants.Response.ContentTypeTextHtml);
         }
 
         public override string ToString()

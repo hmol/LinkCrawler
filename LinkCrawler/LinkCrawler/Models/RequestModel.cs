@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using LinkCrawler.Utils;
+using RestSharp;
 
 namespace LinkCrawler.Models
 {
@@ -14,17 +15,13 @@ namespace LinkCrawler.Models
 
         public ResponseModel SendRequest()
         {
-            if (Url.StartsWith("http://www.norrøna.no"))
-            {
-                
-            }
             var restClient = new RestClient(Url);
             var restRequest = new RestRequest(Method.GET);
+            restRequest.AddHeader("Accept", "*/*");
             var restResponse = restClient.Execute(restRequest);
 
             var responseModel = new ResponseModel(restResponse, Url);
             return responseModel;
-
         }
     }
 }
