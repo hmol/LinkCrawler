@@ -16,7 +16,7 @@ namespace LinkCrawler.Models
         public ResponseModel(IRestResponse restResponse, string url)
         {
             StatusCode = restResponse.StatusCode;
-            IsSucess = StatusCodeNumber < 300;
+            IsSucess = StatusCodeNumber > 99 && StatusCodeNumber < 300;
             Url = url;
             if(StatusCode != HttpStatusCode.OK)
                 return;

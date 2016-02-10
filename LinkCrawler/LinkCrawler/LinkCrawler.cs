@@ -80,7 +80,7 @@ namespace LinkCrawler
             if (!responseModel.IsSucess)
             {
                 Console.WriteLine("Reffered in: " + referrerUrl);
-                SlackClient.NotifySlack(responseModel.Url, referrerUrl);
+                SlackClient.NotifySlack(responseModel, referrerUrl);
             }
         }
     }

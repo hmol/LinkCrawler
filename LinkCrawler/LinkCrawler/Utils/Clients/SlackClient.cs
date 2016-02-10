@@ -1,25 +1,39 @@
-﻿using RestSharp;
+﻿using LinkCrawler.Models;
+using RestSharp;
 
 namespace LinkCrawler.Utils.Clients
 {
     public class SlackClient
     {
-        public const string MessageFormat = "There is a link not working. The links points to this url: {0}. " +
-                                             "The link is placed on this page: {1}";
+        public const string MessageFormat = "There is a link not working. Statuscode: {0}. Url: {1}. " +
+                                             "The link is placed on this page: {2}";
 
-        public void NotifySlack(string url, string referrerUrl)
+        public string WebHookUrl;
+        public string BotName;
+        public string BotIcon;
+
+        public SlackClient()
         {
-            var message = string.Format(MessageFormat, url, referrerUrl);
+            WebHookUrl = Settings.Instance.SlackWebHookUrl;
+            BotName = Settings.Instance.SlackWebHookBotName;
+            BotIcon = Settings.Instance.SlackWebHookBotIconEmoji;
+        }
 
-            var client = new RestClient(Settings.Instance.SlackWebHookUrl);
+        public void NotifySlack(ResponseModel responseModel, string referrerUrl)
+        {
+            var message = string.Format(MessageFormat, responseModel.StatusCodeNumber, responseModel.Url, referrerUrl);
+
+            var client = new RestClient(WebHookUrl);
             var request = new RestRequest(Method.POST) {RequestFormat = DataFormat.Json};
             request.AddBody(
-                new { text = message,
-                      username = Settings.Instance.SlackWebHookBotName,
-                      icon_emoji = Settings.Instance.SlackWebHookBotIconEmoji
+                new
+                {
+                      text = message,
+                      username = BotName,
+                      icon_emoji = BotIcon
                 });
 
-            client.Execute(request);
+            client.ExecuteAsync(request, null);
         }
     }
 }
