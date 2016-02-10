@@ -9,13 +9,14 @@ namespace LinkCrawler.Models
         public string Markup { get; set; }
         public HttpStatusCode StatusCode { get; set; }
         public int StatusCodeNumber { get { return (int)StatusCode; } }
-        public bool IsSucess { get { return StatusCode == HttpStatusCode.OK; } }
+        public bool IsSucess;
         public bool IsHtmlDocument { get; set; }
         public string Url { get; set; }
 
         public ResponseModel(IRestResponse restResponse, string url)
         {
             StatusCode = restResponse.StatusCode;
+            IsSucess = StatusCodeNumber < 300;
             Url = url;
             if(StatusCode != HttpStatusCode.OK)
                 return;
