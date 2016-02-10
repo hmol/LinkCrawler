@@ -5,8 +5,10 @@ namespace LinkCrawler.Utils.Clients
 {
     public class SlackClient
     {
-        public const string MessageFormat = "There is a link not working. Statuscode: {0}. Url: {1}. " +
-                                             "The link is placed on this page: {2}";
+        public const string MessageFormat = "There is a link not working. " +
+                                            "\nUrl: {0}. " +
+                                            "\nStatuscode: {1}." +
+                                            "\nThe link is placed on this page: {2}";
 
         public string WebHookUrl;
         public string BotName;
@@ -21,7 +23,7 @@ namespace LinkCrawler.Utils.Clients
 
         public void NotifySlack(ResponseModel responseModel, string referrerUrl)
         {
-            var message = string.Format(MessageFormat, responseModel.StatusCodeNumber, responseModel.Url, referrerUrl);
+            var message = string.Format(MessageFormat, responseModel.Url, responseModel.StatusCodeNumber, referrerUrl);
 
             var client = new RestClient(WebHookUrl);
             var request = new RestRequest(Method.POST) {RequestFormat = DataFormat.Json};
