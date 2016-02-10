@@ -15,6 +15,6 @@ Example run on www.github.com:
 ![Example run on www.github.com](http://henrikm.com/content/images/2016/Feb/linkcrawler.png "Example run on www.github.com")
 
 If it should stumble upon an link not working, the defined slack webhook will be notified
-![Slack](http://henrikm.com/content/images/2016/Feb/homerbot2.PNG "Slack")
+![Slack](http://henrikm.com/content/images/2016/Feb/homerbot2.jpg "Slack")
 
 Read more about Slack incoming webhooks: https://api.slack.com/incoming-webhooks
