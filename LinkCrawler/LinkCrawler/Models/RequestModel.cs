@@ -1,4 +1,6 @@
-﻿using LinkCrawler.Utils;
+﻿using System;
+using System.Threading.Tasks;
+using LinkCrawler.Utils;
 using RestSharp;
 
 namespace LinkCrawler.Models
@@ -18,10 +20,8 @@ namespace LinkCrawler.Models
             var restClient = new RestClient(Url);
             var restRequest = new RestRequest(Method.GET);
             restRequest.AddHeader("Accept", "*/*");
-            var restResponse = restClient.Execute(restRequest);
-
-            var responseModel = new ResponseModel(restResponse, Url);
-            return responseModel;
+            var response = restClient.Execute(restRequest);
+            return new ResponseModel(response, Url);
         }
     }
 }

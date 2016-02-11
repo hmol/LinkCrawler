@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using LinkCrawler.Utils;
 
 namespace LinkCrawler
 {
@@ -7,14 +9,19 @@ namespace LinkCrawler
     {
         static void Main(string[] args)
         {
+            AsyncStreamWriter.InjectAsConsoleOut();
+
             var stopwatch = new Stopwatch();
-            stopwatch.Start();
+            stopwatch.Start();  
 
             var crawler = new LinkCrawler();
             crawler.CrawlLinks();
 
+            //Task.Run(async () => await crawler.CrawlLinks());
+
             stopwatch.Stop();
             WriteFinishMessage(stopwatch);
+            Console.Read();
         }
 
         private static void WriteFinishMessage(Stopwatch stopwatch)
