@@ -50,14 +50,16 @@ namespace LinkCrawler
             if(restResponse == null)
                 return;
 
-            var responseModel =  new ResponseModel(restResponse, requestModel.Url);
+            var responseModel =  new ResponseModel(restResponse, requestModel);
+
             WriteOutputAndNotifySlack(responseModel, requestModel.ReferrerUrl);
+
             FindAndCrawlLinks(responseModel, requestModel);
         }
 
         public void FindAndCrawlLinks(ResponseModel responseModel, RequestModel requestModel)
         {
-            if (!responseModel.IsSucess || !requestModel.IsInternalUrl || !responseModel.IsHtmlDocument)
+            if (!responseModel.ShouldCrawl)
                 return;
 
             var linksFoundInMarkup = GetListOfUrlsFromMarkup(responseModel.Markup);

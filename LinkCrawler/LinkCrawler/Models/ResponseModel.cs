@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using LinkCrawler.Utils;
+using LinkCrawler.Utils.Extensions;
 using RestSharp;
 
 namespace LinkCrawler.Models
@@ -10,18 +11,20 @@ namespace LinkCrawler.Models
         public HttpStatusCode StatusCode { get; set; }
         public int StatusCodeNumber { get { return (int)StatusCode; } }
         public bool IsSucess;
-        public bool IsHtmlDocument { get; set; }
-        public string Url { get; set; }
 
-        public ResponseModel(IRestResponse restResponse, string url)
+        public bool ShouldCrawl { get; set; }
+        public string Url { get; set; }
+        public RequestModel RequestModel { get; set; }
+
+        public ResponseModel(IRestResponse restResponse, RequestModel requestModel)
         {
             StatusCode = restResponse.StatusCode;
             IsSucess = StatusCodeNumber > 99 && StatusCodeNumber < 300;
-            Url = url;
-            if(StatusCode != HttpStatusCode.OK)
+            Url = requestModel.Url;
+            if(! IsSucess)
                 return;
             Markup = restResponse.Content;
-            IsHtmlDocument = restResponse.ContentType.StartsWith(Constants.Response.ContentTypeTextHtml);
+            ShouldCrawl = IsSucess && requestModel.IsInternalUrl && restResponse.IsHtmlDocument();
         }
 
         public override string ToString()
