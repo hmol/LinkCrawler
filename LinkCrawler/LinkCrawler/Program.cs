@@ -8,7 +8,7 @@ namespace LinkCrawler
         {
             var crawler = new LinkCrawler();
             crawler.Start();
-            Console.ReadKey();
+            Console.Read();
         }
     }
 }
