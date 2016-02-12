@@ -60,7 +60,7 @@ namespace LinkCrawler
             if (!responseModel.IsSucess || !requestModel.IsInternalUrl || !responseModel.IsHtmlDocument)
                 return;
 
-            var linksFoundInMarkup = GetListOfUrls(responseModel.Markup);
+            var linksFoundInMarkup = GetListOfUrlsFromMarkup(responseModel.Markup);
 
             foreach (var url in linksFoundInMarkup)
             {
@@ -72,7 +72,7 @@ namespace LinkCrawler
             }
         }
 
-        public List<string> GetListOfUrls(string markup)
+        public List<string> GetListOfUrlsFromMarkup(string markup)
         {
             var urlList = MarkupHelpers.GetUrlListFromMarkup(markup, CheckImages);
             var correctUrlList = new List<string>();
@@ -98,7 +98,7 @@ namespace LinkCrawler
             return correctUrlList;
         }
 
-        private void WriteOutputAndNotifySlack(ResponseModel responseModel, string referrerUrl = "")
+        private void WriteOutputAndNotifySlack(ResponseModel responseModel, string referrerUrl)
         {
             Console.WriteLine(responseModel.ToString());
 

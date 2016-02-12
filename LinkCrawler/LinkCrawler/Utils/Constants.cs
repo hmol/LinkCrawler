@@ -9,6 +9,7 @@
             public const string SlackWebHookUrl = "Slack.WebHook.Url";
             public const string SlackWebHookBotName = "Slack.WebHook.Bot.Name";
             public const string SlackWebHookBotIconEmoji = "Slack.WebHook.Bot.IconEmoji";
+            public const string SlackWebHookBotMessageFormat = "Slack.WebHook.Bot.MessageFormat";
         }
 
         public static class Response

@@ -5,18 +5,14 @@ namespace LinkCrawler.Utils.Clients
 {
     public class SlackClient
     {
-        public const string MessageFormat = "There is a link not working. " +
-                                            "\nUrl: {0}. " +
-                                            "\nStatuscode: {1}." +
-                                            "\nThe link is placed on this page: {2}";
-
-        public string WebHookUrl, BotName, BotIcon;
+        public string WebHookUrl, BotName, BotIcon, MessageFormat;
 
         public SlackClient()
         {
             WebHookUrl = Settings.Instance.SlackWebHookUrl;
             BotName = Settings.Instance.SlackWebHookBotName;
             BotIcon = Settings.Instance.SlackWebHookBotIconEmoji;
+            MessageFormat = Settings.Instance.SlackWebHookBotMessageFormat;
         }
 
         public void NotifySlack(ResponseModel responseModel, string referrerUrl)

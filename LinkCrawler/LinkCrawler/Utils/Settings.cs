@@ -30,5 +30,8 @@ namespace LinkCrawler.Utils
 
         public string SlackWebHookBotIconEmoji => 
             ConfigurationManager.AppSettings[Constants.AppSettings.SlackWebHookBotIconEmoji];
+
+        public string SlackWebHookBotMessageFormat =>
+            ConfigurationManager.AppSettings[Constants.AppSettings.SlackWebHookBotMessageFormat];
     }
 }

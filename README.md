@@ -10,6 +10,7 @@ Simple C# console application that will crawl the given webpage for image-tags a
 | ```Slack.WebHook.Url```  | Url to the slack webhook     		   |
 | ```Slack.WebHook.Bot.Name``` 	  | Custom name for slack bot   		   |
 | ```Slack.WebHook.Bot.IconEmoji``` | Custom Emoji for slack bot  	       |
+| ```Slack.WebHook.Bot.MessageFormat``` | String format message that will be sent to slack  	       |
  
 Example run on www.github.com:
 ![Example run on www.github.com](http://henrikm.com/content/images/2016/Feb/linkcrawler.png "Example run on www.github.com")
