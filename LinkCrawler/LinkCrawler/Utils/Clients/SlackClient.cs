@@ -10,9 +10,7 @@ namespace LinkCrawler.Utils.Clients
                                             "\nStatuscode: {1}." +
                                             "\nThe link is placed on this page: {2}";
 
-        public string WebHookUrl;
-        public string BotName;
-        public string BotIcon;
+        public string WebHookUrl, BotName, BotIcon;
 
         public SlackClient()
         {
