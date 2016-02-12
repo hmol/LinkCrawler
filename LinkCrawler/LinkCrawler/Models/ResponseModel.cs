@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using LinkCrawler.Utils;
 using LinkCrawler.Utils.Extensions;
 using RestSharp;
 

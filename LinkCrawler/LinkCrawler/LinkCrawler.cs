@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using LinkCrawler.Models;
 using LinkCrawler.Utils;
 using LinkCrawler.Utils.Clients;
+using LinkCrawler.Utils.Extensions;
 using LinkCrawler.Utils.Helpers;
 using RestSharp;
 
@@ -22,8 +23,7 @@ namespace LinkCrawler
             SlackClient = new SlackClient();
             BaseUrl = Settings.Instance.BaseUrl;
             CheckImages = Settings.Instance.CheckImages;
-            RestRequest = new RestRequest(Method.GET);
-            RestRequest.AddHeader("Accept", "*/*");
+            RestRequest = new RestRequest(Method.GET).SetHeader("Accept", "*/*");
         }
 
         public void Start()
@@ -51,17 +51,14 @@ namespace LinkCrawler
                 return;
 
             var responseModel =  new ResponseModel(restResponse, requestModel);
-
             WriteOutputAndNotifySlack(responseModel, requestModel.ReferrerUrl);
 
-            FindAndCrawlLinks(responseModel, requestModel);
+            if (responseModel.ShouldCrawl)
+                FindAndCrawlLinks(responseModel, requestModel);
         }
 
         public void FindAndCrawlLinks(ResponseModel responseModel, RequestModel requestModel)
         {
-            if (!responseModel.ShouldCrawl)
-                return;
-
             var linksFoundInMarkup = GetListOfUrlsFromMarkup(responseModel.Markup);
 
             foreach (var url in linksFoundInMarkup)
