@@ -84,14 +84,19 @@ namespace LinkCrawler
                     || url.StartsWith(Constants.Html.Tel))
                     continue;
 
-                if(!parsedUri.IsAbsoluteUri)
+                if(parsedUri.IsAbsoluteUri)
+                {
+                    correctUrlList.Add(url);
+                }
+                else if (url.StartsWith("//"))
+                {
+                    var newUrl = string.Concat("http:", url);
+                    correctUrlList.Add(newUrl);
+                }
+                else if(url.StartsWith("/"))
                 {
                     var newUrl = string.Concat(BaseUrl, url);
                     correctUrlList.Add(newUrl);
-                }
-                else
-                {
-                    correctUrlList.Add(url);
                 }
             }
             return correctUrlList;
