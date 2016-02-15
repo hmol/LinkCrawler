@@ -15,9 +15,9 @@ namespace LinkCrawler.Utils.Clients
             MessageFormat = Settings.Instance.SlackWebHookBotMessageFormat;
         }
 
-        public void NotifySlack(ResponseModel responseModel, string referrerUrl)
+        public void NotifySlack(ResponseModel responseModel)
         {
-            var message = string.Format(MessageFormat, responseModel.Url, responseModel.StatusCodeNumber, referrerUrl);
+            var message = string.Format(MessageFormat, responseModel.RequestedUrl, responseModel.StatusCodeNumber, responseModel.ReferrerUrl);
 
             var client = new RestClient(WebHookUrl);
             var request = new RestRequest(Method.POST) {RequestFormat = DataFormat.Json};

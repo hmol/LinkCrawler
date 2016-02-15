@@ -28,38 +28,33 @@ namespace LinkCrawler
 
         public void Start()
         {
-            CrawlLink(BaseUrl);
+            SendRequest(BaseUrl);
         }
 
-        public void CrawlLink(string crawlUrl, string referrerUrl = "")
+        public void SendRequest(string crawlUrl, string referrerUrl = "")
         {
             var requestModel = new RequestModel(crawlUrl, referrerUrl);
-            SendRequest(requestModel);
-        }
-
-        public void SendRequest(RequestModel requestModel)
-        {
             requestModel.Client.ExecuteAsync(RestRequest, response =>
             {
-                ProsessResponse(response, requestModel);
+                if(response == null)
+                    return;
+
+                var responseModel = new ResponseModel(response, requestModel);
+                ProsessResponse(responseModel);
             });
         }
 
-        private void ProsessResponse(IRestResponse restResponse, RequestModel requestModel)
+        private void ProsessResponse(ResponseModel responseModel)
         {
-            if(restResponse == null)
-                return;
-
-            var responseModel =  new ResponseModel(restResponse, requestModel);
-            WriteOutputAndNotifySlack(responseModel, requestModel.ReferrerUrl);
+            WriteOutputAndNotifySlack(responseModel);
 
             if (responseModel.ShouldCrawl)
-                FindAndCrawlLinks(responseModel, requestModel);
+                FindAndCrawlForLinksInResponse(responseModel);
         }
 
-        public void FindAndCrawlLinks(ResponseModel responseModel, RequestModel requestModel)
+        public void FindAndCrawlForLinksInResponse(ResponseModel responseModel)
         {
-            var linksFoundInMarkup = GetListOfUrlsFromMarkup(responseModel.Markup);
+            var linksFoundInMarkup = MarkupHelpers.GetUrlListFromMarkup(responseModel.Markup, CheckImages, BaseUrl);
 
             foreach (var url in linksFoundInMarkup)
             {
@@ -67,49 +62,18 @@ namespace LinkCrawler
                     continue;
 
                 VisitedUrlList.Add(url);
-                CrawlLink(url, requestModel.Url);
+                SendRequest(url, responseModel.RequestedUrl);
             }
         }
 
-        public List<string> GetListOfUrlsFromMarkup(string markup)
-        {
-            var urlList = MarkupHelpers.GetUrlListFromMarkup(markup, CheckImages);
-            var correctUrlList = new List<string>();
-
-            foreach (var url in urlList)
-            {
-                Uri parsedUri;
-                if (!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out parsedUri)
-                    || url.StartsWith(Constants.Html.Mailto)
-                    || url.StartsWith(Constants.Html.Tel))
-                    continue;
-
-                if(parsedUri.IsAbsoluteUri)
-                {
-                    correctUrlList.Add(url);
-                }
-                else if (url.StartsWith("//"))
-                {
-                    var newUrl = string.Concat("http:", url);
-                    correctUrlList.Add(newUrl);
-                }
-                else if(url.StartsWith("/"))
-                {
-                    var newUrl = string.Concat(BaseUrl, url);
-                    correctUrlList.Add(newUrl);
-                }
-            }
-            return correctUrlList;
-        }
-
-        private void WriteOutputAndNotifySlack(ResponseModel responseModel, string referrerUrl)
+        private void WriteOutputAndNotifySlack(ResponseModel responseModel)
         {
             Console.WriteLine(responseModel.ToString());
 
             if (!responseModel.IsSucess)
             {
-                Console.WriteLine("Reffered in: " + referrerUrl);
-                SlackClient.NotifySlack(responseModel, referrerUrl);
+                Console.WriteLine("Reffered in: " + responseModel.ReferrerUrl);
+                SlackClient.NotifySlack(responseModel);
             }
         }
     }

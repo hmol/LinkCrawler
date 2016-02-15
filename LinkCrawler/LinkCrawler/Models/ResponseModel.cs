@@ -6,21 +6,18 @@ namespace LinkCrawler.Models
 {
     public class ResponseModel
     {
-        public string Markup { get; set; }
-        public HttpStatusCode StatusCode { get; set; }
+        public string Markup, RequestedUrl, ReferrerUrl;
+        public HttpStatusCode StatusCode;
         public int StatusCodeNumber { get { return (int)StatusCode; } }
-        public bool IsSucess;
-
-        public bool ShouldCrawl { get; set; }
-        public string Url { get; set; }
-        public RequestModel RequestModel { get; set; }
+        public bool IsSucess, ShouldCrawl;
 
         public ResponseModel(IRestResponse restResponse, RequestModel requestModel)
         {
+            ReferrerUrl = requestModel.ReferrerUrl;
             StatusCode = restResponse.StatusCode;
+            RequestedUrl = requestModel.Url;
             IsSucess = StatusCodeNumber > 99 && StatusCodeNumber < 300;
-            Url = requestModel.Url;
-            if(! IsSucess)
+            if (! IsSucess)
                 return;
             Markup = restResponse.Content;
             ShouldCrawl = IsSucess && requestModel.IsInternalUrl && restResponse.IsHtmlDocument();
@@ -28,7 +25,7 @@ namespace LinkCrawler.Models
 
         public override string ToString()
         {
-            return string.Format("{0}   {1}   {2}", StatusCodeNumber, StatusCode, Url);
+            return string.Format("{0}   {1}   {2}", StatusCodeNumber, StatusCode, RequestedUrl);
         }
     }
 }
