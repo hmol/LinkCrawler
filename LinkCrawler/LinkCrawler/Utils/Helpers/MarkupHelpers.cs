@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HtmlAgilityPack;
+using LinkCrawler.Models;
 
 namespace LinkCrawler.Utils.Helpers
 {
@@ -35,35 +36,20 @@ namespace LinkCrawler.Utils.Helpers
         /// (i.e relative urls, urls with no sceme, mailto links..etc)
         /// </summary>
         /// <returns>List of urls that will work with restsharp for sending http get</returns>
-        public static List<string> GetUrlListFromMarkup(string markup, bool checkImages, string baseUrl)
+        public static List<string> GetValidUrlListFromMarkup(string markup, bool checkImages, string baseUrl)
         {
             var urlList = GetAllUrlsFromMarkup(markup, checkImages);
-            var correctUrlList = new List<string>();
+            var validUrlList = new List<string>();
 
             foreach (var url in urlList)
             {
-                Uri parsedUri;
-                if (!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out parsedUri)
-                    || url.StartsWith(Constants.Html.Mailto)
-                    || url.StartsWith(Constants.Html.Tel))
-                    continue;
-
-                if (parsedUri.IsAbsoluteUri)
+                string validUrl;
+                if (ValidUrl.Parse(url, baseUrl, out validUrl))
                 {
-                    correctUrlList.Add(url);
-                }
-                else if (url.StartsWith("//"))
-                {
-                    var newUrl = string.Concat("http:", url);
-                    correctUrlList.Add(newUrl);
-                }
-                else if (url.StartsWith("/"))
-                {
-                    var newUrl = string.Concat(baseUrl, url);
-                    correctUrlList.Add(newUrl);
+                    validUrlList.Add(validUrl);
                 }
             }
-            return correctUrlList;
+            return validUrlList;
         }
     }
 }

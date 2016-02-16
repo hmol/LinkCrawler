@@ -54,7 +54,7 @@ namespace LinkCrawler
 
         public void FindAndCrawlForLinksInResponse(ResponseModel responseModel)
         {
-            var linksFoundInMarkup = MarkupHelpers.GetUrlListFromMarkup(responseModel.Markup, CheckImages, BaseUrl);
+            var linksFoundInMarkup = MarkupHelpers.GetValidUrlListFromMarkup(responseModel.Markup, CheckImages, BaseUrl);
 
             foreach (var url in linksFoundInMarkup)
             {

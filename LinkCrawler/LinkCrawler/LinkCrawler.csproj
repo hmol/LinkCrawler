@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utils\ValidUrl.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="LinkCrawler.cs" />
     <Compile Include="Models\RequestModel.cs" />
