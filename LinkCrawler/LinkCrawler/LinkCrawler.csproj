@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utils\Helpers\ConsoleHelper.cs" />
     <Compile Include="Utils\ValidUrl.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="LinkCrawler.cs" />

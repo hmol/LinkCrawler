@@ -25,6 +25,9 @@ namespace LinkCrawler.Models
 
         public override string ToString()
         {
+            if(! IsSucess)
+                return string.Format("{0}   {1}   {2}    ==> Refferred from {3}", StatusCodeNumber, StatusCode, RequestedUrl, ReferrerUrl);
+
             return string.Format("{0}   {1}   {2}", StatusCodeNumber, StatusCode, RequestedUrl);
         }
     }

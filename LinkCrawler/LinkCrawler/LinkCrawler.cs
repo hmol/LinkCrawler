@@ -68,12 +68,14 @@ namespace LinkCrawler
 
         private void WriteOutputAndNotifySlack(ResponseModel responseModel)
         {
-            Console.WriteLine(responseModel.ToString());
-
             if (!responseModel.IsSucess)
             {
-                Console.WriteLine("Reffered in: " + responseModel.ReferrerUrl);
+                ConsoleHelper.WriteError(responseModel.ToString());
                 SlackClient.NotifySlack(responseModel);
+            }
+            else
+            {
+                Console.WriteLine(responseModel.ToString());
             }
         }
     }
