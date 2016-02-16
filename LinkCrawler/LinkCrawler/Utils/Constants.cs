@@ -21,6 +21,8 @@
         {
             public const string Mailto = "mailto:";
             public const string Tel = "tel:";
+            public const string Sms = "sms:";
+            public const string Javascript = "javascript:";
             public const string Href = "href";
             public const string Src = "src";
             public const string LinkSearchPattern = "//a[@href]";

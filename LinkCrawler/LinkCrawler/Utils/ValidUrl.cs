@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using LinkCrawler.Utils.Extensions;
 
 namespace LinkCrawler.Utils
 {
@@ -10,8 +12,10 @@ namespace LinkCrawler.Utils
 
             Uri parsedUri;
             if (!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out parsedUri)
-                || url.StartsWith(Constants.Html.Mailto)
-                || url.StartsWith(Constants.Html.Tel))
+                || url.StartsWithIgnoreCase(Constants.Html.Mailto)
+                || url.StartsWithIgnoreCase(Constants.Html.Tel)
+                || url.StartsWithIgnoreCase(Constants.Html.Javascript)
+                || url.StartsWithIgnoreCase(Constants.Html.Sms))
                 return false;
 
             if (parsedUri.IsAbsoluteUri)
@@ -19,13 +23,13 @@ namespace LinkCrawler.Utils
                 validUrl = url;
                 return true;
             }
-            else if (url.StartsWith("//"))
+            if (url.StartsWith("//"))
             {
                 var newUrl = string.Concat("http:", url);
                 validUrl = newUrl;
                 return true;
             }
-            else if (url.StartsWith("/"))
+            if (url.StartsWith("/"))
             {
                 var newUrl = string.Concat(baseUrl, url);
                 validUrl = newUrl;
