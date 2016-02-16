@@ -1,5 +1,5 @@
 # LinkCrawler
-Simple C# console application that will crawl the given webpage for image-tags and hyperlinks. If some of them is not working (HttpStatusCode >= 300), an message will be sent to slack. Also request-information on all urls will be written to console output.
+Simple C# console application that will crawl the given webpage for image-tags and hyperlinks. If some of them is not working (HttpStatusCode >= 300), an message will be sent to slack. Also response status will be written to console output.
 
 ## App.Settings
 
