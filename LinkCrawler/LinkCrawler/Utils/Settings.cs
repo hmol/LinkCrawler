@@ -22,6 +22,9 @@ namespace LinkCrawler.Utils
         public bool CheckImages => 
             ConfigurationManager.AppSettings[Constants.AppSettings.CheckImages].ToBool();
 
+        public bool OnlyReportBrokenLinksToOutput => 
+            ConfigurationManager.AppSettings[Constants.AppSettings.OnlyReportBrokenLinksToOutput].ToBool();
+
         public string SlackWebHookUrl => 
             ConfigurationManager.AppSettings[Constants.AppSettings.SlackWebHookUrl];
 

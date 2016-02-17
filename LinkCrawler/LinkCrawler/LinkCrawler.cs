@@ -14,7 +14,7 @@ namespace LinkCrawler
         public static List<string> VisitedUrlList;
         public static SlackClient SlackClient;
         public string BaseUrl;
-        public bool CheckImages;
+        public bool CheckImages, OnlyReportBrokenLinksToOutput;
         public RestRequest RestRequest;
 
         public LinkCrawler()
@@ -23,6 +23,7 @@ namespace LinkCrawler
             SlackClient = new SlackClient();
             BaseUrl = Settings.Instance.BaseUrl;
             CheckImages = Settings.Instance.CheckImages;
+            OnlyReportBrokenLinksToOutput = Settings.Instance.OnlyReportBrokenLinksToOutput;
             RestRequest = new RestRequest(Method.GET).SetHeader("Accept", "*/*");
         }
 
@@ -73,7 +74,7 @@ namespace LinkCrawler
                 ConsoleHelper.WriteError(responseModel.ToString());
                 SlackClient.NotifySlack(responseModel);
             }
-            else
+            else if(!OnlyReportBrokenLinksToOutput)
             {
                 Console.WriteLine(responseModel.ToString());
             }

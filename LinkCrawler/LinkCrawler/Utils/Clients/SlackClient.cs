@@ -7,6 +7,11 @@ namespace LinkCrawler.Utils.Clients
     {
         public string WebHookUrl, BotName, BotIcon, MessageFormat;
 
+        public bool HasWebHookUrl
+        {
+            get { return !string.IsNullOrEmpty(WebHookUrl); }
+        }
+
         public SlackClient()
         {
             WebHookUrl = Settings.Instance.SlackWebHookUrl;
@@ -17,6 +22,9 @@ namespace LinkCrawler.Utils.Clients
 
         public void NotifySlack(ResponseModel responseModel)
         {
+            if(!HasWebHookUrl)
+                return;
+
             var message = string.Format(MessageFormat, responseModel.RequestedUrl, responseModel.StatusCodeNumber, responseModel.ReferrerUrl);
 
             var client = new RestClient(WebHookUrl);

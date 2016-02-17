@@ -6,6 +6,7 @@ Simple C# console application that will crawl the given webpage for image-tags a
 | Key     				      | Usage           					   |
 | --------------------------  |:--------------------------------------:|
 | ```CheckImages```      			  | If true, <img src=".." will be checked |
+| ```OnlyReportBrokenLinksToOutput```      			  | If true, only broken links will be reported to output. If false, all links will be written to output. |
 | ```BaseUrl   ```   				  | Base url for site to crawl  	       |
 | ```Slack.WebHook.Url```  | Url to the slack webhook     		   |
 | ```Slack.WebHook.Bot.Name``` 	  | Custom name for slack bot   		   |
