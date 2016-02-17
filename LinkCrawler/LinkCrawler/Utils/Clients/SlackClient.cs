@@ -34,7 +34,8 @@ namespace LinkCrawler.Utils.Clients
                 {
                       text = message,
                       username = BotName,
-                      icon_emoji = BotIcon
+                      icon_emoji = BotIcon,
+                      mrkdwn = true
                 });
 
             client.ExecuteAsync(request, null);

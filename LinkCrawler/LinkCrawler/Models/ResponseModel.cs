@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using LinkCrawler.Utils.Extensions;
 using RestSharp;
 
@@ -16,7 +17,7 @@ namespace LinkCrawler.Models
             ReferrerUrl = requestModel.ReferrerUrl;
             StatusCode = restResponse.StatusCode;
             RequestedUrl = requestModel.Url;
-            IsSucess = StatusCodeNumber > 99 && StatusCodeNumber < 300;
+            IsSucess = (StatusCodeNumber > 99 && StatusCodeNumber < 300) || StatusCodeNumber >= 900;
             if (! IsSucess)
                 return;
             Markup = restResponse.Content;
@@ -26,7 +27,7 @@ namespace LinkCrawler.Models
         public override string ToString()
         {
             if(! IsSucess)
-                return string.Format("{0}   {1}   {2}    ==> Refferred from {3}", StatusCodeNumber, StatusCode, RequestedUrl, ReferrerUrl);
+                return string.Format("{0}\t{1}\t{2}{3}\treferer: {4}", StatusCodeNumber, StatusCode, RequestedUrl, Environment.NewLine, ReferrerUrl);
 
             return string.Format("{0}   {1}   {2}", StatusCodeNumber, StatusCode, RequestedUrl);
         }
