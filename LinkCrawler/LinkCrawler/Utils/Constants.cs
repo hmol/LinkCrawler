@@ -5,6 +5,7 @@
         public static class AppSettings
         {
             public const string BaseUrl = "BaseUrl";
+            public const string NotValidUrlRegex = "NotValidUrlRegex";
             public const string OnlyReportBrokenLinksToOutput = "OnlyReportBrokenLinksToOutput";
             public const string CheckImages = "CheckImages";
             public const string SlackWebHookUrl = "Slack.WebHook.Url";
@@ -20,10 +21,6 @@
 
         public static class Html
         {
-            public const string Mailto = "mailto:";
-            public const string Tel = "tel:";
-            public const string Sms = "sms:";
-            public const string Javascript = "javascript:";
             public const string Href = "href";
             public const string Src = "src";
             public const string LinkSearchPattern = "//a[@href]";

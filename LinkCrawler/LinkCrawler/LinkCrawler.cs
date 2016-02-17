@@ -16,11 +16,12 @@ namespace LinkCrawler
         public string BaseUrl;
         public bool CheckImages, OnlyReportBrokenLinksToOutput;
         public RestRequest RestRequest;
-
+        private ValidUrlParser ValidUrlParser;
         public LinkCrawler()
         {
             VisitedUrlList = new List<string>();
             SlackClient = new SlackClient();
+            ValidUrlParser = new ValidUrlParser();
             BaseUrl = Settings.Instance.BaseUrl;
             CheckImages = Settings.Instance.CheckImages;
             OnlyReportBrokenLinksToOutput = Settings.Instance.OnlyReportBrokenLinksToOutput;
@@ -55,7 +56,7 @@ namespace LinkCrawler
 
         public void FindAndCrawlForLinksInResponse(ResponseModel responseModel)
         {
-            var linksFoundInMarkup = MarkupHelpers.GetValidUrlListFromMarkup(responseModel.Markup, CheckImages, BaseUrl);
+            var linksFoundInMarkup = MarkupHelpers.GetValidUrlListFromMarkup(responseModel.Markup, ValidUrlParser, CheckImages);
 
             foreach (var url in linksFoundInMarkup)
             {

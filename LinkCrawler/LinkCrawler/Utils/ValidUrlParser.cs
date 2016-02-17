@@ -1,21 +1,26 @@
 ﻿using System;
-using System.Globalization;
+using System.Text.RegularExpressions;
 using LinkCrawler.Utils.Extensions;
 
 namespace LinkCrawler.Utils
 {
-    public static class ValidUrl
+    public class ValidUrlParser
     {
-        public static bool Parse(string url, string baseUrl, out string validUrl)
+        public Regex Regex;
+        public string BaseUrl;
+        public ValidUrlParser()
+        {
+            Regex = new Regex(Settings.Instance.NotValidUrlRegex);
+            BaseUrl = Settings.Instance.BaseUrl;
+        }
+
+        public bool Parse(string url, out string validUrl)
         {
             validUrl = string.Empty;
 
             Uri parsedUri;
             if (!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out parsedUri)
-                || url.StartsWithIgnoreCase(Constants.Html.Mailto)
-                || url.StartsWithIgnoreCase(Constants.Html.Tel)
-                || url.StartsWithIgnoreCase(Constants.Html.Javascript)
-                || url.StartsWithIgnoreCase(Constants.Html.Sms))
+                    || Regex.IsMatch(url))
                 return false;
 
             if (parsedUri.IsAbsoluteUri)
@@ -31,7 +36,7 @@ namespace LinkCrawler.Utils
             }
             if (url.StartsWith("/"))
             {
-                var newUrl = string.Concat(baseUrl, url);
+                var newUrl = string.Concat(BaseUrl, url);
                 validUrl = newUrl;
                 return true;
             }

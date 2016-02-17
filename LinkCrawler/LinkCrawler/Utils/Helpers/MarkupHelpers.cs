@@ -36,7 +36,7 @@ namespace LinkCrawler.Utils.Helpers
         /// (i.e relative urls, urls with no sceme, mailto links..etc)
         /// </summary>
         /// <returns>List of urls that will work with restsharp for sending http get</returns>
-        public static List<string> GetValidUrlListFromMarkup(string markup, bool checkImages, string baseUrl)
+        public static List<string> GetValidUrlListFromMarkup(string markup, ValidUrlParser parser, bool checkImages)
         {
             var urlList = GetAllUrlsFromMarkup(markup, checkImages);
             var validUrlList = new List<string>();
@@ -44,7 +44,7 @@ namespace LinkCrawler.Utils.Helpers
             foreach (var url in urlList)
             {
                 string validUrl;
-                if (ValidUrl.Parse(url, baseUrl, out validUrl))
+                if (parser.Parse(url, out validUrl))
                 {
                     validUrlList.Add(validUrl);
                 }
