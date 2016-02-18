@@ -3,8 +3,8 @@ Simple C# console application that will crawl the given webpage for image-tags a
 
 ## App.Settings
 
-| Key     				      | Usage           					   |
-| --------------------------  |:--------------------------------------:|
+| Key     				       | Usage           					   |
+| :--------------------------  | :---------------------------------------|
 | ```BaseUrl   ```   				  | Base url for site to crawl  	       |
 | ```CheckImages```      			  | If true, <img src=".." will be checked |
 | ```ValidUrlRegex   ```   				  | Regex to match valid urls  	       |
