@@ -5,13 +5,13 @@ Simple C# console application that will crawl the given webpage for image-tags a
 
 | Key     				      | Usage           					   |
 | --------------------------  |:--------------------------------------:|
-| ```CheckImages```      			  | If true, <img src=".." will be checked |
-| ```OnlyReportBrokenLinksToOutput```      			  | If true, only broken links will be reported to output. If false, all links will be written to output. |
 | ```BaseUrl   ```   				  | Base url for site to crawl  	       |
+| ```CheckImages```      			  | If true, <img src=".." will be checked |
 | ```ValidUrlRegex   ```   				  | Regex to match valid urls  	       |
 | ```Slack.WebHook.Url```  | Url to the slack webhook. If empty, it will not try to send message to slack     		   |
 | ```Slack.WebHook.Bot.Name``` 	  | Custom name for slack bot   		   |
 | ```Slack.WebHook.Bot.IconEmoji``` | Custom Emoji for slack bot  	       |
+| ```OnlyReportBrokenLinksToOutput```      			  | If true, only broken links will be reported to output. If false, all links will be written to output. |
 | ```Slack.WebHook.Bot.MessageFormat``` | String format message that will be sent to slack  	       |
  
 Example run on www.github.com:
