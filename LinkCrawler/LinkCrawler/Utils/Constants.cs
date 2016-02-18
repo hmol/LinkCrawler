@@ -5,7 +5,7 @@
         public static class AppSettings
         {
             public const string BaseUrl = "BaseUrl";
-            public const string NotValidUrlRegex = "NotValidUrlRegex";
+            public const string ValidUrlRegex = "ValidUrlRegex";
             public const string OnlyReportBrokenLinksToOutput = "OnlyReportBrokenLinksToOutput";
             public const string CheckImages = "CheckImages";
             public const string SlackWebHookUrl = "Slack.WebHook.Url";

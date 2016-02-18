@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utils\Extensions\RegexExtensions.cs" />
     <Compile Include="Utils\Helpers\ConsoleHelper.cs" />
     <Compile Include="Utils\ValidUrlParser.cs" />
     <Compile Include="Utils\Constants.cs" />

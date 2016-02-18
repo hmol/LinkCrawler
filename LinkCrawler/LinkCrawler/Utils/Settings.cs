@@ -19,8 +19,8 @@ namespace LinkCrawler.Utils
         public string BaseUrl => 
             ConfigurationManager.AppSettings[Constants.AppSettings.BaseUrl].Trim('/');
 
-        public string NotValidUrlRegex => 
-            ConfigurationManager.AppSettings[Constants.AppSettings.NotValidUrlRegex];
+        public string ValidUrlRegex => 
+            ConfigurationManager.AppSettings[Constants.AppSettings.ValidUrlRegex];
 
         public bool CheckImages => 
             ConfigurationManager.AppSettings[Constants.AppSettings.CheckImages].ToBool();

@@ -10,7 +10,7 @@ namespace LinkCrawler.Utils
         public string BaseUrl;
         public ValidUrlParser()
         {
-            Regex = new Regex(Settings.Instance.NotValidUrlRegex);
+            Regex = new Regex(Settings.Instance.ValidUrlRegex);
             BaseUrl = Settings.Instance.BaseUrl;
         }
 
@@ -18,9 +18,13 @@ namespace LinkCrawler.Utils
         {
             validUrl = string.Empty;
 
+            if (string.IsNullOrEmpty(url))
+                return false;
+            
             Uri parsedUri;
-            if (!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out parsedUri)
-                    || Regex.IsMatch(url))
+
+            if (Regex.IsNotMatch(url)
+                ||!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out parsedUri))
                 return false;
 
             if (parsedUri.IsAbsoluteUri)
