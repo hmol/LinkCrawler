@@ -29,7 +29,7 @@ namespace LinkCrawler.Models
             if(! IsSucess)
                 return string.Format("{0}\t{1}\t{2}{3}\treferer: {4}", StatusCodeNumber, StatusCode, RequestedUrl, Environment.NewLine, ReferrerUrl);
 
-            return string.Format("{0}   {1}   {2}", StatusCodeNumber, StatusCode, RequestedUrl);
+            return string.Format("{0}\t{1}\t{2}", StatusCodeNumber, StatusCode, RequestedUrl);
         }
     }
 }

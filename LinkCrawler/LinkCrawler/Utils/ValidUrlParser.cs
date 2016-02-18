@@ -26,7 +26,7 @@ namespace LinkCrawler.Utils
             if (Regex.IsNotMatch(url)
                 ||!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out parsedUri))
                 return false;
-
+            
             if (parsedUri.IsAbsoluteUri)
             {
                 validUrl = url;
