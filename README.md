@@ -26,7 +26,7 @@ If configured correctly, the defined slack-webhook will be notified about broken
 ![Slack](http://henrikm.com/content/images/2016/Feb/blurred1.jpg "Slack")
 
 ##How I use it
-I have it running as an Webjob in Azure, scheduled to two times a week. It will notify the slack-channel where the editors of the website dwells.
+I have it running as an Webjob in Azure, scheduled every 4 days. It will notify the slack-channel where the editors of the website dwells.
 
 Creating a webjob is simple. Just put your compiled project files (/bin/) inside a .zip, and upload it.
 ![Slack](http://henrikm.com/content/images/2016/Feb/azure-webjob-setup-1.PNG "WebJob")
