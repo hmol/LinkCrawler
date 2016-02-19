@@ -1,6 +1,9 @@
 # LinkCrawler
 Simple C# console application that will crawl the given webpage for image-tags and hyperlinks. If some of them is not working (HttpStatusCode >= 300), an message will be sent to slack. Also response status will be written to console output.
 
+## Why?
+Because it could be useful to know when a webpage you have responsibility for displays broken links to it's users. I have this running continuously, but you don't have to. For instance, after upgrading your CMS, changing database-scheme, migrating content etc, it can be relevant to know if this did or did not not introduce broken links. Just run this tool one time and you will know exactly how many links are broken, where they link to, and where they are located.
+
 ## App.Settings
 
 | Key     				       | Usage           					   |
