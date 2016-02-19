@@ -17,7 +17,7 @@ Simple C# console application that will crawl the given webpage for image-tags a
 Example run on www.github.com:
 ![Example run on www.github.com](http://henrikm.com/content/images/2016/Feb/linkcrawler_example.PNG "Example run on www.github.com")
 
-If it should stumble upon an link not working, the defined slack webhook will be notified
-![Slack](http://henrikm.com/content/images/2016/Feb/homerbot2.jpg "Slack")
+If it should stumble upon an link not working, the defined slack webhook will be notified (if correctly configured).
+![Slack](http://henrikm.com/content/images/2016/Feb/blurred1.jpg "Slack")
 
 Read more about Slack incoming webhooks: https://api.slack.com/incoming-webhooks
