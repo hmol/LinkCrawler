@@ -27,7 +27,7 @@ namespace LinkCrawler.Models
         public override string ToString()
         {
             if(! IsSucess)
-                return string.Format("{0}\t{1}\t{2}{3}\treferer: {4}", StatusCodeNumber, StatusCode, RequestedUrl, Environment.NewLine, ReferrerUrl);
+                return string.Format("{0}\t{1}\t{2}{3}\tReferer:\t{4}", StatusCodeNumber, StatusCode, RequestedUrl, Environment.NewLine, ReferrerUrl);
 
             return string.Format("{0}\t{1}\t{2}", StatusCodeNumber, StatusCode, RequestedUrl);
         }
