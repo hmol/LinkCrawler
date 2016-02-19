@@ -43,4 +43,5 @@ The output of a webjob is available because Azure saves it in log files.
 
 
 Read more about Azure Webjobs: https://azure.microsoft.com/en-us/documentation/articles/web-sites-create-web-jobs/
+
 Read more about Slack incoming webhooks: https://api.slack.com/incoming-webhooks
