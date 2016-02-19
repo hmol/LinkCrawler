@@ -32,6 +32,7 @@ Creating a webjob is simple. Just put your compiled project files (/bin/) inside
 ![Slack](http://henrikm.com/content/images/2016/Feb/azure-webjob-setup-1.PNG "WebJob")
 
 Schedule it.
+
 ![Slack](http://henrikm.com/content/images/2016/Feb/azure-scheduele.PNG)
 
 The output of a webjob is available because Azure saves it in log files.
