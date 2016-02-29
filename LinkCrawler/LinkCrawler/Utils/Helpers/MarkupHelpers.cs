@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using HtmlAgilityPack;
+using LinkCrawler.Utils.Parsers;
+using LinkCrawler.Utils.Settings;
+using System.Collections.Generic;
 using System.Linq;
-using HtmlAgilityPack;
 
 namespace LinkCrawler.Utils.Helpers
 {
@@ -28,13 +30,13 @@ namespace LinkCrawler.Utils.Helpers
             }
             return linkUrls;
         }
-        
+
         /// <summary>
         /// Get's a list of all urls in markup and tires to fix the urls that Restsharp will have a problem with 
         /// (i.e relative urls, urls with no sceme, mailto links..etc)
         /// </summary>
         /// <returns>List of urls that will work with restsharp for sending http get</returns>
-        public static List<string> GetValidUrlListFromMarkup(string markup, ValidUrlParser parser, bool checkImages)
+        public static List<string> GetValidUrlListFromMarkup(string markup, IValidUrlParser parser, bool checkImages)
         {
             var urlList = GetAllUrlsFromMarkup(markup, checkImages);
             var validUrlList = new List<string>();

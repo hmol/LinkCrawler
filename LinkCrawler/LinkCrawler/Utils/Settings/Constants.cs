@@ -1,4 +1,4 @@
-﻿namespace LinkCrawler.Utils
+﻿namespace LinkCrawler.Utils.Settings
 {
     public static class Constants
     {

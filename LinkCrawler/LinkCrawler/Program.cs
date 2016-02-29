@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LinkCrawler.Utils;
+using StructureMap;
+using System;
 
 namespace LinkCrawler
 {
@@ -6,9 +8,12 @@ namespace LinkCrawler
     {
         static void Main(string[] args)
         {
-            var crawler = new LinkCrawler();
-            crawler.Start();
-            Console.Read();
+            using (var container = Container.For<StructureMapRegistry>())
+            {
+                var linkCrawler = container.GetInstance<LinkCrawler>();
+                linkCrawler.Start();
+                Console.Read();
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using LinkCrawler.Utils;
-using RestSharp;
+﻿using RestSharp;
 
 namespace LinkCrawler.Models
 {
@@ -10,10 +9,10 @@ namespace LinkCrawler.Models
         public bool IsInternalUrl { get; set; }
         public RestClient Client;
 
-        public RequestModel(string url, string referrerUrl)
+        public RequestModel(string url, string referrerUrl, string baseUrl)
         {
             Url = url;
-            IsInternalUrl = url.StartsWith(Settings.Instance.BaseUrl);
+            IsInternalUrl = url.StartsWith(baseUrl);
             ReferrerUrl = referrerUrl;
             Client = new RestClient(Url);
         }

@@ -1,31 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using LinkCrawler.Models;
-using LinkCrawler.Utils;
+﻿using LinkCrawler.Models;
 using LinkCrawler.Utils.Clients;
 using LinkCrawler.Utils.Extensions;
 using LinkCrawler.Utils.Helpers;
+using LinkCrawler.Utils.Parsers;
+using LinkCrawler.Utils.Settings;
 using RestSharp;
+using System;
+using System.Collections.Generic;
 
 namespace LinkCrawler
 {
     public class LinkCrawler
     {
-        public static List<string> VisitedUrlList;
-        public static SlackClient SlackClient;
         public string BaseUrl;
-        public bool CheckImages, OnlyReportBrokenLinksToOutput;
+        public bool CheckImages;
+        public RestClient RestClient;
         public RestRequest RestRequest;
-        private ValidUrlParser ValidUrlParser;
-        public LinkCrawler()
+        public IValidUrlParser ValidUrlParser;
+        public static ISlackClient SlackClient;
+        public bool OnlyReportBrokenLinksToOutput;
+        public static List<string> VisitedUrlList;
+
+        public LinkCrawler(ISlackClient slackClient, IValidUrlParser validUrlParser, ISettings settings)
         {
+            SlackClient = slackClient;
+            BaseUrl = settings.BaseUrl;
+            RestClient = new RestClient();
+            ValidUrlParser = validUrlParser;
+            CheckImages = settings.CheckImages;
             VisitedUrlList = new List<string>();
-            SlackClient = new SlackClient();
-            ValidUrlParser = new ValidUrlParser();
-            BaseUrl = Settings.Instance.BaseUrl;
-            CheckImages = Settings.Instance.CheckImages;
-            OnlyReportBrokenLinksToOutput = Settings.Instance.OnlyReportBrokenLinksToOutput;
             RestRequest = new RestRequest(Method.GET).SetHeader("Accept", "*/*");
+            OnlyReportBrokenLinksToOutput = settings.OnlyReportBrokenLinksToOutput;
         }
 
         public void Start()
@@ -35,18 +40,19 @@ namespace LinkCrawler
 
         public void SendRequest(string crawlUrl, string referrerUrl = "")
         {
-            var requestModel = new RequestModel(crawlUrl, referrerUrl);
-            requestModel.Client.ExecuteAsync(RestRequest, response =>
+            var requestModel = new RequestModel(crawlUrl, referrerUrl, BaseUrl);
+            RestClient.BaseUrl = new Uri(crawlUrl);
+            RestClient.ExecuteAsync(RestRequest, response =>
             {
-                if(response == null)
+                if (response == null)
                     return;
 
                 var responseModel = new ResponseModel(response, requestModel);
-                ProsessResponse(responseModel);
+                ProcessResponse(responseModel);
             });
         }
 
-        private void ProsessResponse(ResponseModel responseModel)
+        private void ProcessResponse(ResponseModel responseModel)
         {
             WriteOutputAndNotifySlack(responseModel);
 
@@ -75,7 +81,7 @@ namespace LinkCrawler
                 ConsoleHelper.WriteError(responseModel.ToString());
                 SlackClient.NotifySlack(responseModel);
             }
-            else if(!OnlyReportBrokenLinksToOutput)
+            else if (!OnlyReportBrokenLinksToOutput)
             {
                 Console.WriteLine(responseModel.ToString());
             }

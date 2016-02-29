@@ -1,17 +1,18 @@
-﻿using System;
+﻿using LinkCrawler.Utils.Extensions;
+using LinkCrawler.Utils.Settings;
+using System;
 using System.Text.RegularExpressions;
-using LinkCrawler.Utils.Extensions;
 
-namespace LinkCrawler.Utils
+namespace LinkCrawler.Utils.Parsers
 {
-    public class ValidUrlParser
+    public class ValidUrlParser : IValidUrlParser
     {
-        public Regex Regex;
-        public string BaseUrl;
-        public ValidUrlParser()
+        public Regex Regex { get; set; }
+        public string BaseUrl { get; set; }
+        public ValidUrlParser(ISettings settings)
         {
-            Regex = new Regex(Settings.Instance.ValidUrlRegex);
-            BaseUrl = Settings.Instance.BaseUrl;
+            Regex = new Regex(settings.ValidUrlRegex);
+            BaseUrl = settings.BaseUrl;
         }
 
         public bool Parse(string url, out string validUrl)
@@ -20,13 +21,13 @@ namespace LinkCrawler.Utils
 
             if (string.IsNullOrEmpty(url))
                 return false;
-            
+
             Uri parsedUri;
 
             if (Regex.IsNotMatch(url)
-                ||!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out parsedUri))
+                || !Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out parsedUri))
                 return false;
-            
+
             if (parsedUri.IsAbsoluteUri)
             {
                 validUrl = url;

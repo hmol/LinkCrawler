@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using LinkCrawler.Utils.Settings;
+using RestSharp;
 
 namespace LinkCrawler.Utils.Extensions
 {
