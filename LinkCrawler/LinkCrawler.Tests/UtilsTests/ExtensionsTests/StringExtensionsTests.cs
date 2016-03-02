@@ -51,8 +51,8 @@ namespace LinkCrawler.Tests.UtilsTests.ExtensionsTests
         public void StartsWithIgnoreCase_SameLetterAndSameCase_True()
         {
             var word = "Foobar";
-            var F = "F";
-            var result = word.StartsWithIgnoreCase(F);
+            var letter = "F";
+            var result = word.StartsWithIgnoreCase(letter);
             Assert.AreEqual(true, result);
         }
 
@@ -60,8 +60,8 @@ namespace LinkCrawler.Tests.UtilsTests.ExtensionsTests
         public void StartsWithIgnoreCase_SameLetterAndDifferentCase_True()
         {
             var word = "Foobar";
-            var f = "f";
-            var result = word.StartsWithIgnoreCase(f);
+            var letter = "f";
+            var result = word.StartsWithIgnoreCase(letter);
             Assert.AreEqual(true, result);
         }
 
@@ -69,8 +69,8 @@ namespace LinkCrawler.Tests.UtilsTests.ExtensionsTests
         public void StartsWithIgnoreCase_EmptyWord_False()
         {
             var word = "";
-            var A = "A";
-            var result = word.StartsWithIgnoreCase(A);
+            var letter = "A";
+            var result = word.StartsWithIgnoreCase(letter);
             Assert.AreEqual(false, result);
         }
 
@@ -105,8 +105,8 @@ namespace LinkCrawler.Tests.UtilsTests.ExtensionsTests
         public void StartsWithIgnoreCase_DifferentLetterAndDifferentCase_True()
         {
             var word = "Foobar";
-            var a = "a";
-            var result = word.StartsWithIgnoreCase(a);
+            var letter = "a";
+            var result = word.StartsWithIgnoreCase(letter);
             Assert.AreEqual(false, result);
         }
 
@@ -114,14 +114,9 @@ namespace LinkCrawler.Tests.UtilsTests.ExtensionsTests
         public void StartsWithIgnoreCase_DifferentLetterAndSameCase_True()
         {
             var word = "Foobar";
-            var A = "A";
-            var result = word.StartsWithIgnoreCase(A);
+            var letter = "A";
+            var result = word.StartsWithIgnoreCase(letter);
             Assert.AreEqual(false, result);
         }
-
-        //public static bool StartsWithIgnoreCase(this string str, string startsWith)
-        //{
-        //      return str.StartsWith(startsWith, true, CultureInfo.InvariantCulture);
-        //}
     }
 }
