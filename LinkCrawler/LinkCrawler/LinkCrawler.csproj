@@ -76,6 +76,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ILinkCrawler.cs" />
+    <Compile Include="Models\IReponseModel.cs" />
     <Compile Include="Utils\Clients\ISlackClient.cs" />
     <Compile Include="Utils\StructureMapRegistry.cs" />
     <Compile Include="Utils\Extensions\RegexExtensions.cs" />

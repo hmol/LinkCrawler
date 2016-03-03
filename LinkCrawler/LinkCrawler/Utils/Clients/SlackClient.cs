@@ -24,7 +24,7 @@ namespace LinkCrawler.Utils.Clients
             MessageFormat = settings.SlackWebHookBotMessageFormat;
         }
 
-        public void NotifySlack(ResponseModel responseModel)
+        public void NotifySlack(IResponseModel responseModel)
         {
             if (!HasWebHookUrl)
                 return;
