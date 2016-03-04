@@ -22,8 +22,12 @@ namespace LinkCrawler.Tests
             MockValidUrlParser = new Mock<IValidUrlParser>();
             MockSlackClient = new Mock<ISlackClient>();
             MockSettings = new Mock<ISettings>();
+            MockSettings.Setup(x => x.ValidUrlRegex).Returns(@"(^http[s]?:\/{2})|(^www)|(^\/{1,2})");
+            MockSettings.Setup(x => x.BaseUrl).Returns("http://www.github.com");
 
-            LinkCrawler = new LinkCrawler(MockSlackClient.Object, MockValidUrlParser.Object, MockSettings.Object);
+            var parser = new ValidUrlParser(MockSettings.Object);
+
+            LinkCrawler = new LinkCrawler(MockSlackClient.Object, parser, MockSettings.Object);
         }
 
         [Test]
@@ -34,6 +38,18 @@ namespace LinkCrawler.Tests
 
             LinkCrawler.WriteOutputAndNotifySlack(mockResponseModel.Object);
             MockSlackClient.Verify(m => m.NotifySlack(mockResponseModel.Object));
+        }
+
+        [Test]
+        public void FindAndCrawlForLinksInResponse_ResponseModelWithMarkup_ValidUrlFound()
+        {
+            var url = "http://www.github.com";
+            var markup = string.Format("this is html document <a href='{0}'>a valid link</a>", url);
+            var mockResponseModel = new Mock<IResponseModel>();
+            mockResponseModel.Setup(x => x.Markup).Returns(markup);
+
+            LinkCrawler.FindAndCrawlForLinksInResponse(mockResponseModel.Object);
+            Assert.That(LinkCrawler.VisitedUrlList.Contains(url));
         }
     }
 }
