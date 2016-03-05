@@ -41,14 +41,14 @@ namespace LinkCrawler.Tests
         }
 
         [Test]
-        public void FindAndCrawlForLinksInResponse_ResponseModelWithMarkup_ValidUrlFound()
+        public void CrawlForLinksInResponse_ResponseModelWithMarkup_ValidUrlFoundInMarkup()
         {
             var url = "http://www.github.com";
             var markup = string.Format("this is html document <a href='{0}'>a valid link</a>", url);
             var mockResponseModel = new Mock<IResponseModel>();
             mockResponseModel.Setup(x => x.Markup).Returns(markup);
 
-            LinkCrawler.FindAndCrawlForLinksInResponse(mockResponseModel.Object);
+            LinkCrawler.CrawlForLinksInResponse(mockResponseModel.Object);
             Assert.That(LinkCrawler.VisitedUrlList.Contains(url));
         }
     }

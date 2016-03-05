@@ -57,10 +57,10 @@ namespace LinkCrawler
             WriteOutputAndNotifySlack(responseModel);
 
             if (responseModel.ShouldCrawl)
-                FindAndCrawlForLinksInResponse(responseModel);
+                CrawlForLinksInResponse(responseModel);
         }
 
-        public void FindAndCrawlForLinksInResponse(IResponseModel responseModel)
+        public void CrawlForLinksInResponse(IResponseModel responseModel)
         {
             var linksFoundInMarkup = MarkupHelpers.GetValidUrlListFromMarkup(responseModel.Markup, ValidUrlParser, CheckImages);
 
