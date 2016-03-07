@@ -25,14 +25,16 @@ namespace LinkCrawler.Tests
             MockSettings.Setup(x => x.ValidUrlRegex).Returns(@"(^http[s]?:\/{2})|(^www)|(^\/{1,2})");
             MockSettings.Setup(x => x.BaseUrl).Returns("http://www.github.com");
 
-            var parser = new ValidUrlParser(MockSettings.Object);
 
+            var parser = new ValidUrlParser(MockSettings.Object);
             LinkCrawler = new LinkCrawler(MockSlackClient.Object, parser, MockSettings.Object);
         }
 
         [Test]
         public void WriteOutputAndNotifySlack_SucessResponse_NotifySlack()
         {
+            var settings = new Settings();
+
             var mockResponseModel = new Mock<IResponseModel>();
             mockResponseModel.Setup(x => x.IsSucess).Returns(false);
 
