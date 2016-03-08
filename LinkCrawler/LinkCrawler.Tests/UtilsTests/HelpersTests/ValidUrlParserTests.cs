@@ -34,5 +34,17 @@ namespace LinkCrawler.Tests.UtilsTests.HelpersTests
             var validUrl = "http:" + url;
             Assert.That(parsed, Is.EqualTo(validUrl));
         }
+
+        [Test]
+        public void Parse_UrlOnlyRelativePath_True()
+        {
+            var relativeUrl = "/relative/path";
+            string parsed;
+            var result = ValidUrlParser.Parse(relativeUrl, out parsed);
+            Assert.That(result, Is.True);
+            var validUrl = string.Format("{0}{1}",ValidUrlParser.BaseUrl, relativeUrl);
+
+            Assert.That(parsed, Is.EqualTo(validUrl));
+        }
     }
 }
