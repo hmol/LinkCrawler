@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace LinkCrawler.Utils.Extensions
 {
@@ -11,8 +10,8 @@ namespace LinkCrawler.Utils.Extensions
         }
         public static bool ToBool(this string str)
         {
-            var parsed = false;
-            Boolean.TryParse(str, out parsed);
+            bool parsed;
+            bool.TryParse(str, out parsed);
             return parsed;
         }
     }

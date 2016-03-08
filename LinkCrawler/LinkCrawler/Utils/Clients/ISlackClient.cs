@@ -8,9 +8,7 @@ namespace LinkCrawler.Utils.Clients
         string BotName { get; set; }
         string BotIcon { get; set; }
         string MessageFormat { get; set; }
-
         bool HasWebHookUrl { get; }
-
-        void NotifySlack(ResponseModel responseModel);
+        void NotifySlack(IResponseModel responseModel);
     }
 }

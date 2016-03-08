@@ -12,7 +12,7 @@ namespace LinkCrawler
 {
     public class LinkCrawler
     {
-        public string BaseUrl;
+        public string BaseUrl { get; set; }
         public bool CheckImages;
         public RestClient RestClient;
         public RestRequest RestRequest;
@@ -52,15 +52,15 @@ namespace LinkCrawler
             });
         }
 
-        private void ProcessResponse(ResponseModel responseModel)
+        public void ProcessResponse(IResponseModel responseModel)
         {
             WriteOutputAndNotifySlack(responseModel);
 
             if (responseModel.ShouldCrawl)
-                FindAndCrawlForLinksInResponse(responseModel);
+                CrawlForLinksInResponse(responseModel);
         }
 
-        public void FindAndCrawlForLinksInResponse(ResponseModel responseModel)
+        public void CrawlForLinksInResponse(IResponseModel responseModel)
         {
             var linksFoundInMarkup = MarkupHelpers.GetValidUrlListFromMarkup(responseModel.Markup, ValidUrlParser, CheckImages);
 
@@ -74,7 +74,7 @@ namespace LinkCrawler
             }
         }
 
-        private void WriteOutputAndNotifySlack(ResponseModel responseModel)
+        public void WriteOutputAndNotifySlack(IResponseModel responseModel)
         {
             if (!responseModel.IsSucess)
             {
