@@ -78,6 +78,9 @@
   <ItemGroup>
     <Compile Include="Models\IReponseModel.cs" />
     <Compile Include="Utils\Clients\ISlackClient.cs" />
+    <Compile Include="Utils\Outputs\ConsoleOutput.cs" />
+    <Compile Include="Utils\Outputs\IOutput.cs" />
+    <Compile Include="Utils\Outputs\SlackOutput.cs" />
     <Compile Include="Utils\StructureMapRegistry.cs" />
     <Compile Include="Utils\Extensions\RegexExtensions.cs" />
     <Compile Include="Utils\Helpers\ConsoleHelper.cs" />

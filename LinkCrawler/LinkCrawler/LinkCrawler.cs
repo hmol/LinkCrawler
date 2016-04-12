@@ -1,5 +1,4 @@
 ﻿using LinkCrawler.Models;
-using LinkCrawler.Utils.Clients;
 using LinkCrawler.Utils.Extensions;
 using LinkCrawler.Utils.Helpers;
 using LinkCrawler.Utils.Parsers;
@@ -7,6 +6,7 @@ using LinkCrawler.Utils.Settings;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using LinkCrawler.Utils.Outputs;
 
 namespace LinkCrawler
 {
@@ -16,16 +16,16 @@ namespace LinkCrawler
         public bool CheckImages;
         public RestClient RestClient;
         public RestRequest RestRequest;
+        public IEnumerable<IOutput> Outputs;
         public IValidUrlParser ValidUrlParser;
-        public static ISlackClient SlackClient;
         public bool OnlyReportBrokenLinksToOutput;
         public static List<string> VisitedUrlList;
 
-        public LinkCrawler(ISlackClient slackClient, IValidUrlParser validUrlParser, ISettings settings)
+        public LinkCrawler(IEnumerable<IOutput> outputs, IValidUrlParser validUrlParser, ISettings settings)
         {
-            SlackClient = slackClient;
             BaseUrl = settings.BaseUrl;
             RestClient = new RestClient();
+            Outputs = outputs;
             ValidUrlParser = validUrlParser;
             CheckImages = settings.CheckImages;
             VisitedUrlList = new List<string>();
@@ -78,12 +78,17 @@ namespace LinkCrawler
         {
             if (!responseModel.IsSucess)
             {
-                ConsoleHelper.WriteError(responseModel.ToString());
-                SlackClient.NotifySlack(responseModel);
+                foreach (var output in Outputs)
+                {
+                    output.WriteError(responseModel);
+                }
             }
             else if (!OnlyReportBrokenLinksToOutput)
             {
-                Console.WriteLine(responseModel.ToString());
+                foreach (var output in Outputs)
+                {
+                    output.WriteInfo(responseModel);
+                }
             }
         }
     }
