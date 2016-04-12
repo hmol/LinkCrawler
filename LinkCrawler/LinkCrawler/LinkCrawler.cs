@@ -54,7 +54,7 @@ namespace LinkCrawler
 
         public void ProcessResponse(IResponseModel responseModel)
         {
-            WriteOutputAndNotifySlack(responseModel);
+            WriteOutput(responseModel);
 
             if (responseModel.ShouldCrawl)
                 CrawlForLinksInResponse(responseModel);
@@ -74,7 +74,7 @@ namespace LinkCrawler
             }
         }
 
-        public void WriteOutputAndNotifySlack(IResponseModel responseModel)
+        public void WriteOutput(IResponseModel responseModel)
         {
             if (!responseModel.IsSucess)
             {

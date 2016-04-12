@@ -36,7 +36,7 @@ namespace LinkCrawler.Tests
             var mockResponseModel = new Mock<IResponseModel>();
             mockResponseModel.Setup(x => x.IsSucess).Returns(false);
 
-            LinkCrawler.WriteOutputAndNotifySlack(mockResponseModel.Object);
+            LinkCrawler.WriteOutput(mockResponseModel.Object);
             MockSlackClient.Verify(m => m.NotifySlack(mockResponseModel.Object));
         }
 
