@@ -12,6 +12,9 @@
             public const string SlackWebHookBotName = "Slack.WebHook.Bot.Name";
             public const string SlackWebHookBotIconEmoji = "Slack.WebHook.Bot.IconEmoji";
             public const string SlackWebHookBotMessageFormat = "Slack.WebHook.Bot.MessageFormat";
+            public const string CsvEnabled = "Csv.Enabled";
+            public const string CsvFilePath = "Csv.FilePath";
+            public const string CsvOverwrite = "Csv.Overwrite";
         }
 
         public static class Response
