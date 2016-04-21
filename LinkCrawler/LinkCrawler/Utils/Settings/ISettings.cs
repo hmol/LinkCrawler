@@ -17,5 +17,13 @@
         string SlackWebHookBotIconEmoji { get; }
 
         string SlackWebHookBotMessageFormat { get; }
+
+        bool CsvEnabled { get; }
+
+        string CsvFilePath { get; }
+
+        bool CsvOverwrite { get; }
+
+        string CsvDelimiter { get; }
     }
 }

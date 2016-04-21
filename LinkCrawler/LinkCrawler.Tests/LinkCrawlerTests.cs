@@ -1,5 +1,6 @@
 ﻿using LinkCrawler.Models;
 using LinkCrawler.Utils.Clients;
+using LinkCrawler.Utils.Outputs;
 using LinkCrawler.Utils.Parsers;
 using LinkCrawler.Utils.Settings;
 using Moq;
@@ -21,8 +22,12 @@ namespace LinkCrawler.Tests
             MockSlackClient = new Mock<ISlackClient>();
             Settings = new Settings();
             var parser = new ValidUrlParser(Settings);
+            var outputs = new IOutput[]
+            {
+                new SlackOutput(MockSlackClient.Object), 
+            };
 
-            LinkCrawler = new LinkCrawler(MockSlackClient.Object, parser, Settings);
+            LinkCrawler = new LinkCrawler(outputs, parser, Settings);
         }
 
         [Test]
@@ -31,7 +36,7 @@ namespace LinkCrawler.Tests
             var mockResponseModel = new Mock<IResponseModel>();
             mockResponseModel.Setup(x => x.IsSucess).Returns(false);
 
-            LinkCrawler.WriteOutputAndNotifySlack(mockResponseModel.Object);
+            LinkCrawler.WriteOutput(mockResponseModel.Object);
             MockSlackClient.Verify(m => m.NotifySlack(mockResponseModel.Object));
         }
 

@@ -1,4 +1,5 @@
-﻿using StructureMap.Configuration.DSL;
+﻿using LinkCrawler.Utils.Outputs;
+using StructureMap.Configuration.DSL;
 using StructureMap.Graph;
 
 namespace LinkCrawler.Utils
@@ -11,6 +12,7 @@ namespace LinkCrawler.Utils
             {
                 scan.TheCallingAssembly();
                 scan.WithDefaultConventions();
+                scan.AddAllTypesOf<IOutput>();
             });
         }
     }
