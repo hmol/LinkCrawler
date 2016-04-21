@@ -16,6 +16,10 @@ Because it could be useful to know when a webpage you have responsibility for di
 | ```Slack.WebHook.Bot.IconEmoji``` | Custom Emoji for slack bot  	       |
 | ```OnlyReportBrokenLinksToOutput```      			  | If true, only broken links will be reported to output. |
 | ```Slack.WebHook.Bot.MessageFormat``` | String format message that will be sent to slack  	       |
+| ```Csv.Enabled```   				  | Enable/disable CSV output  	       |
+| ```Csv.FilePath```   				  | File path for the CSV file  	   |
+| ```Csv.Overwrite```   			  | Whether to overwrite or append (if file exists)  	       |
+| ```Csv.Delimiter   ```   			  | Delimiter between columns in the CSV file (like ',' or ';')  	       |
  
 ## Output to console
 ![Example run on www.github.com](http://henrikm.com/content/images/2016/Feb/linkcrawler_example.PNG "Example run on www.github.com")
