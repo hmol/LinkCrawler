@@ -23,5 +23,7 @@
         string CsvFilePath { get; }
 
         bool CsvOverwrite { get; }
+
+        string CsvDelimiter { get; }
     }
 }

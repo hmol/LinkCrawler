@@ -7,8 +7,8 @@ namespace LinkCrawler.Utils.Outputs
 {
     public class CsvOutput : IOutput, IDisposable
     {
-        private readonly StreamWriter _writer;
-        private const string Delimiter = ",";
+        private readonly ISettings _settings;
+        private StreamWriter _writer;
 
         public CsvOutput(ISettings settings)
         {
@@ -17,13 +17,19 @@ namespace LinkCrawler.Utils.Outputs
                 return;
             }
 
-            var fileMode = settings.CsvOverwrite ? FileMode.Create : FileMode.Append;
-            var file = new FileStream(settings.CsvFilePath, fileMode, FileAccess.Write);
+            _settings = settings;
+            Setup();
+        }
+
+        private void Setup()
+        {
+            var fileMode = _settings.CsvOverwrite ? FileMode.Create : FileMode.Append;
+            var file = new FileStream(_settings.CsvFilePath, fileMode, FileAccess.Write);
             _writer = new StreamWriter(file);
 
             if (fileMode == FileMode.Create)
             {
-                _writer.WriteLine("Code{0}Status{0}Url{0}Referer", Delimiter);
+                _writer.WriteLine("Code{0}Status{0}Url{0}Referer", _settings.CsvDelimiter);
             }
         }
 
@@ -40,7 +46,7 @@ namespace LinkCrawler.Utils.Outputs
         private void Write(IResponseModel responseModel)
         {
             _writer?.WriteLine("{1}{0}{2}{0}{3}{0}{4}",
-                Delimiter,
+                _settings.CsvDelimiter,
                 responseModel.StatusCodeNumber,
                 responseModel.StatusCode,
                 responseModel.RequestedUrl,

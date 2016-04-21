@@ -37,5 +37,8 @@ namespace LinkCrawler.Utils.Settings
 
         public bool CsvOverwrite =>
             ConfigurationManager.AppSettings[Constants.AppSettings.CsvOverwrite].ToBool();
+
+        public string CsvDelimiter =>
+            ConfigurationManager.AppSettings[Constants.AppSettings.CsvDelimiter];
     }
 }
