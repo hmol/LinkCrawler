@@ -6,6 +6,12 @@ namespace LinkCrawler.Utils.Extensions
     {
         public static bool StartsWithIgnoreCase(this string str, string startsWith)
         {
+            if (string.IsNullOrEmpty(str) && string.IsNullOrEmpty(startsWith))
+                return true;
+
+            if (string.IsNullOrEmpty(str) || string.IsNullOrEmpty(startsWith))
+                return false;
+
             return str.StartsWith(startsWith, true, CultureInfo.InvariantCulture);
         }
         public static bool ToBool(this string str)
