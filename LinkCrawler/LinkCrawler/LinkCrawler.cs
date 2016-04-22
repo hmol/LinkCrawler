@@ -1,30 +1,28 @@
 ﻿using LinkCrawler.Models;
 using LinkCrawler.Utils.Extensions;
 using LinkCrawler.Utils.Helpers;
+using LinkCrawler.Utils.Outputs;
 using LinkCrawler.Utils.Parsers;
 using LinkCrawler.Utils.Settings;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using LinkCrawler.Utils.Outputs;
 
 namespace LinkCrawler
 {
     public class LinkCrawler
     {
         public string BaseUrl { get; set; }
-        public bool CheckImages;
-        public RestClient RestClient;
-        public RestRequest RestRequest;
-        public IEnumerable<IOutput> Outputs;
-        public IValidUrlParser ValidUrlParser;
-        public bool OnlyReportBrokenLinksToOutput;
-        public static List<string> VisitedUrlList;
+        public bool CheckImages { get; set; }
+        public RestRequest RestRequest { get; set; }
+        public IEnumerable<IOutput> Outputs { get; set; }
+        public IValidUrlParser ValidUrlParser { get; set; }
+        public bool OnlyReportBrokenLinksToOutput { get; set; }
+        public static List<string> VisitedUrlList { get; set; }
 
         public LinkCrawler(IEnumerable<IOutput> outputs, IValidUrlParser validUrlParser, ISettings settings)
         {
             BaseUrl = settings.BaseUrl;
-            RestClient = new RestClient();
             Outputs = outputs;
             ValidUrlParser = validUrlParser;
             CheckImages = settings.CheckImages;
@@ -41,8 +39,9 @@ namespace LinkCrawler
         public void SendRequest(string crawlUrl, string referrerUrl = "")
         {
             var requestModel = new RequestModel(crawlUrl, referrerUrl, BaseUrl);
-            RestClient.BaseUrl = new Uri(crawlUrl);
-            RestClient.ExecuteAsync(RestRequest, response =>
+            var restClient = new RestClient(new Uri(crawlUrl)) { FollowRedirects = false };
+
+            restClient.ExecuteAsync(RestRequest, response =>
             {
                 if (response == null)
                     return;
