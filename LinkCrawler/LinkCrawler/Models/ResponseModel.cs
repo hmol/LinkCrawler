@@ -2,6 +2,7 @@
 using RestSharp;
 using System;
 using System.Net;
+using LinkCrawler.Utils.Settings;
 
 namespace LinkCrawler.Models
 {
@@ -16,12 +17,12 @@ namespace LinkCrawler.Models
         public bool IsSuccess { get; }
         public bool ShouldCrawl { get; }
 
-        public ResponseModel(IRestResponse restResponse, RequestModel requestModel)
+        public ResponseModel(IRestResponse restResponse, RequestModel requestModel, ISettings settings)
         {
             ReferrerUrl = requestModel.ReferrerUrl;
             StatusCode = restResponse.StatusCode;
             RequestedUrl = requestModel.Url;
-            IsSuccess = (StatusCodeNumber > 99 && StatusCodeNumber < 300) || StatusCodeNumber >= 900;
+            IsSuccess = settings.IsSuccess(StatusCode);
             if (!IsSuccess)
                 return;
             Markup = restResponse.Content;

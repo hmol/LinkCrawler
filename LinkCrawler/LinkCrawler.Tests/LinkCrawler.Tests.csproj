@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="LinkCrawlerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UtilsTests\ExtensionsTests\HttpStatusCodeExtensionsTests.cs" />
     <Compile Include="UtilsTests\ExtensionsTests\StringExtensionsTests.cs" />
     <Compile Include="UtilsTests\HelpersTests\ValidUrlParserTests.cs" />
   </ItemGroup>

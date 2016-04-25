@@ -16,6 +16,7 @@
             public const string CsvFilePath = "Csv.FilePath";
             public const string CsvOverwrite = "Csv.Overwrite";
             public const string CsvDelimiter = "Csv.Delimiter";
+            public const string SuccessHttpStatusCodes = "SuccessHttpStatusCodes";
         }
 
         public static class Response

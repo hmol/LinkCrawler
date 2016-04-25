@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Models\IResponseModel.cs" />
     <Compile Include="Utils\Clients\ISlackClient.cs" />
+    <Compile Include="Utils\Extensions\HttpStatusCodeExtensions.cs" />
     <Compile Include="Utils\Outputs\ConsoleOutput.cs" />
     <Compile Include="Utils\Outputs\CsvOutput.cs" />
     <Compile Include="Utils\Outputs\IOutput.cs" />

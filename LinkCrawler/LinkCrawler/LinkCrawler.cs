@@ -20,6 +20,7 @@ namespace LinkCrawler
         public IValidUrlParser ValidUrlParser;
         public bool OnlyReportBrokenLinksToOutput;
         public static List<string> VisitedUrlList;
+        private ISettings _settings;
 
         public LinkCrawler(IEnumerable<IOutput> outputs, IValidUrlParser validUrlParser, ISettings settings)
         {
@@ -31,6 +32,7 @@ namespace LinkCrawler
             VisitedUrlList = new List<string>();
             RestRequest = new RestRequest(Method.GET).SetHeader("Accept", "*/*");
             OnlyReportBrokenLinksToOutput = settings.OnlyReportBrokenLinksToOutput;
+            _settings = settings;
         }
 
         public void Start()
@@ -47,7 +49,7 @@ namespace LinkCrawler
                 if (response == null)
                     return;
 
-                var responseModel = new ResponseModel(response, requestModel);
+                var responseModel = new ResponseModel(response, requestModel, _settings);
                 ProcessResponse(responseModel);
             });
         }
