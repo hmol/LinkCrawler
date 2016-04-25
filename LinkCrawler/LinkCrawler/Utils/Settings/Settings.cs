@@ -1,5 +1,6 @@
 ﻿using LinkCrawler.Utils.Extensions;
 using System.Configuration;
+using System.Net;
 
 namespace LinkCrawler.Utils.Settings
 {
@@ -40,5 +41,11 @@ namespace LinkCrawler.Utils.Settings
 
         public string CsvDelimiter =>
             ConfigurationManager.AppSettings[Constants.AppSettings.CsvDelimiter];
+
+        public bool IsSuccess(HttpStatusCode statusCode)
+        {
+            var configuredCodes = ConfigurationManager.AppSettings[Constants.AppSettings.SuccessHttpStatusCodes] ?? "";
+            return statusCode.IsSuccess(configuredCodes);
+        }
     }
 }
