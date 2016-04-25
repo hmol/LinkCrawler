@@ -76,7 +76,7 @@ namespace LinkCrawler
 
         public void WriteOutput(IResponseModel responseModel)
         {
-            if (!responseModel.IsSucess)
+            if (!responseModel.IsSuccess)
             {
                 foreach (var output in Outputs)
                 {
