@@ -14,6 +14,7 @@ Because it could be useful to know when a webpage you have responsibility for di
 | Key     				       | Usage           					   |
 | :--------------------------  | :---------------------------------------|
 | ```BaseUrl   ```   				  | Base url for site to crawl  	       |
+| ```SuccessHttpStatusCodes```	|	HTTP status codes that are considered "successful". Example: "1xx,2xx,302,303"	|
 | ```CheckImages```      			  | If true, <img src=".." will be checked |
 | ```ValidUrlRegex   ```   				  | Regex to match valid urls  	       |
 | ```Slack.WebHook.Url```  | Url to the slack webhook. If empty, it will not try to send message to slack     		   |

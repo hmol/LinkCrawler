@@ -1,4 +1,6 @@
-﻿namespace LinkCrawler.Utils.Settings
+﻿using System.Net;
+
+namespace LinkCrawler.Utils.Settings
 {
     public interface ISettings
     {
@@ -25,5 +27,7 @@
         bool CsvOverwrite { get; }
 
         string CsvDelimiter { get; }
+
+        bool IsSuccess(HttpStatusCode statusCode);
     }
 }

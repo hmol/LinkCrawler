@@ -7,6 +7,7 @@ using LinkCrawler.Utils.Settings;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using LinkCrawler.Utils.Outputs;
 
 namespace LinkCrawler
 {
@@ -19,6 +20,7 @@ namespace LinkCrawler
         public IValidUrlParser ValidUrlParser { get; set; }
         public bool OnlyReportBrokenLinksToOutput { get; set; }
         public static List<string> VisitedUrlList { get; set; }
+        private ISettings _settings;
 
         public LinkCrawler(IEnumerable<IOutput> outputs, IValidUrlParser validUrlParser, ISettings settings)
         {
@@ -29,6 +31,7 @@ namespace LinkCrawler
             VisitedUrlList = new List<string>();
             RestRequest = new RestRequest(Method.GET).SetHeader("Accept", "*/*");
             OnlyReportBrokenLinksToOutput = settings.OnlyReportBrokenLinksToOutput;
+            _settings = settings;
         }
 
         public void Start()
@@ -46,7 +49,7 @@ namespace LinkCrawler
                 if (response == null)
                     return;
 
-                var responseModel = new ResponseModel(response, requestModel);
+                var responseModel = new ResponseModel(response, requestModel, _settings);
                 ProcessResponse(responseModel);
             });
         }
@@ -75,7 +78,7 @@ namespace LinkCrawler
 
         public void WriteOutput(IResponseModel responseModel)
         {
-            if (!responseModel.IsSucess)
+            if (!responseModel.IsSuccess)
             {
                 foreach (var output in Outputs)
                 {
