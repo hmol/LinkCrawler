@@ -20,8 +20,6 @@ namespace LinkCrawler.Utils.Settings
 
         string SlackWebHookBotMessageFormat { get; }
 
-        bool CsvEnabled { get; }
-
         string CsvFilePath { get; }
 
         bool CsvOverwrite { get; }

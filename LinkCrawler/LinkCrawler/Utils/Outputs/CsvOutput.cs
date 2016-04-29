@@ -12,11 +12,6 @@ namespace LinkCrawler.Utils.Outputs
 
         public CsvOutput(ISettings settings)
         {
-            if (!settings.CsvEnabled)
-            {
-                return;
-            }
-
             _settings = settings;
             Setup();
         }

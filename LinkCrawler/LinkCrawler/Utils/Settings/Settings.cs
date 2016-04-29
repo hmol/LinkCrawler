@@ -30,9 +30,6 @@ namespace LinkCrawler.Utils.Settings
         public string SlackWebHookBotMessageFormat =>
             ConfigurationManager.AppSettings[Constants.AppSettings.SlackWebHookBotMessageFormat];
 
-        public bool CsvEnabled =>
-            ConfigurationManager.AppSettings[Constants.AppSettings.CsvEnabled].ToBool();
-
         public string CsvFilePath =>
             ConfigurationManager.AppSettings[Constants.AppSettings.CsvFilePath];
 
