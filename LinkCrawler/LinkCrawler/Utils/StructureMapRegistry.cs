@@ -39,6 +39,15 @@ namespace LinkCrawler.Utils
                         ));
                     }
 
+                    if (!concreteType.GetInterfaces().Contains(pluginType))
+                    {
+                        throw new ConfigurationErrorsException(string.Format(
+                            "Output provider '{0}' does not implement IOutput: {1}",
+                            provider.Key,
+                            provider.Value
+                        ));
+                    }
+
                     For(pluginType).Add(concreteType).Named(provider.Key);
                 }
             }
