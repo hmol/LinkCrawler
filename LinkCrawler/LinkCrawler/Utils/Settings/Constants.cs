@@ -16,6 +16,7 @@
             public const string CsvOverwrite = "Csv.Overwrite";
             public const string CsvDelimiter = "Csv.Delimiter";
             public const string SuccessHttpStatusCodes = "SuccessHttpStatusCodes";
+            public const string OutputProviders = "outputProviders";
         }
 
         public static class Response
@@ -32,4 +33,3 @@
         }
     }
 }
-     

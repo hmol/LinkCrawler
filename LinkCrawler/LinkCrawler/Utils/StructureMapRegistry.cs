@@ -3,6 +3,7 @@ using System.Collections;
 using System.Configuration;
 using System.Linq;
 using LinkCrawler.Utils.Outputs;
+using LinkCrawler.Utils.Settings;
 using StructureMap.Configuration.DSL;
 using StructureMap.Graph;
 
@@ -18,7 +19,7 @@ namespace LinkCrawler.Utils
                 scan.WithDefaultConventions();
             });
 
-            var providers = (ConfigurationManager.GetSection("outputProviders") as Hashtable)?
+            var providers = (ConfigurationManager.GetSection(Constants.AppSettings.OutputProviders) as Hashtable)?
                 .Cast<DictionaryEntry>()
                 .ToDictionary(d => d.Key.ToString(), d => d.Value.ToString());
 
