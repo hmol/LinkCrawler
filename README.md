@@ -27,6 +27,7 @@ Ther also is a ```<outputProviders>``` that controls what output should be used.
 
 ## Build
 Clone repo :point_right: open solution in Visual Studio :point_right: build :facepunch:
+
 AppVeyor is used as CI, so when code is pushed to this repo the solution will get built and all tests will be run. 
 
 | Branch | Build status |
