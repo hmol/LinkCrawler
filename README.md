@@ -1,15 +1,12 @@
 # LinkCrawler
 Simple C# console application that will crawl the given webpage for image-tags and hyperlinks. If some of them is not working, info will be sent to output.
 
-| Branch | Build status |
-| :-----  | :---------------------------------------|
-| develop | [![Build status](https://ci.appveyor.com/api/projects/status/syw3l7xeicy7xc0b/branch/develop?svg=true)](https://ci.appveyor.com/project/hmol/linkcrawler/branch/develop) |
-| master | [![Build status](https://ci.appveyor.com/api/projects/status/syw3l7xeicy7xc0b/branch/master?svg=true)](https://ci.appveyor.com/project/hmol/linkcrawler/branch/master) |
+
 
 ## Why?
 Because it could be useful to know when a webpage you have responsibility for displays broken links to it's users. I have this running continuously, but you don't have to. For instance, after upgrading your CMS, changing database-scheme, migrating content etc, it can be relevant to know if this did or did not not introduce broken links. Just run this tool one time and you will know exactly how many links are broken, where they link to, and where they are located.
 
-## App.Settings
+## AppSettings
 
 | Key     				       | Usage           					   |
 | :--------------------------  | :---------------------------------------|
@@ -22,13 +19,20 @@ Because it could be useful to know when a webpage you have responsibility for di
 | ```Slack.WebHook.Bot.IconEmoji``` | Custom Emoji for slack bot  	       |
 | ```OnlyReportBrokenLinksToOutput```      			  | If true, only broken links will be reported to output. |
 | ```Slack.WebHook.Bot.MessageFormat``` | String format message that will be sent to slack  	       |
-| ```Csv.Enabled```   				  | Enable/disable CSV output  	       |
 | ```Csv.FilePath```   				  | File path for the CSV file  	   |
 | ```Csv.Overwrite```   			  | Whether to overwrite or append (if file exists)  	       |
 | ```Csv.Delimiter   ```   			  | Delimiter between columns in the CSV file (like ',' or ';')  	       |
 
+Ther also is a ```<outputProviders>``` that controls what output should be used.
+
 ## Build
 Clone repo :point_right: open solution in Visual Studio :point_right: build :facepunch:
+AppVeyor is used as CI, so when code is pushed to this repo the solution will get built and all tests will be run. 
+
+| Branch | Build status |
+| :-----  | :---------------------------------------|
+| develop | [![Build status](https://ci.appveyor.com/api/projects/status/syw3l7xeicy7xc0b/branch/develop?svg=true)](https://ci.appveyor.com/project/hmol/linkcrawler/branch/develop) |
+| master | [![Build status](https://ci.appveyor.com/api/projects/status/syw3l7xeicy7xc0b/branch/master?svg=true)](https://ci.appveyor.com/project/hmol/linkcrawler/branch/master) |
 
 ## Output to console
 ![Example run on www.github.com](http://henrikm.com/content/images/2016/Feb/linkcrawler_example.PNG "Example run on www.github.com")
