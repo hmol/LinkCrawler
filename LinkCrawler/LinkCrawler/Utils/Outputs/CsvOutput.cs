@@ -1,14 +1,14 @@
-﻿using System;
-using System.IO;
-using LinkCrawler.Models;
+﻿using LinkCrawler.Models;
 using LinkCrawler.Utils.Settings;
+using System;
+using System.IO;
 
 namespace LinkCrawler.Utils.Outputs
 {
     public class CsvOutput : IOutput, IDisposable
     {
         private readonly ISettings _settings;
-        private StreamWriter _writer;
+        private TextWriter _writer;
 
         public CsvOutput(ISettings settings)
         {
@@ -20,7 +20,9 @@ namespace LinkCrawler.Utils.Outputs
         {
             var fileMode = _settings.CsvOverwrite ? FileMode.Create : FileMode.Append;
             var file = new FileStream(_settings.CsvFilePath, fileMode, FileAccess.Write);
-            _writer = new StreamWriter(file);
+
+            var streamWriter = new StreamWriter(file);
+            _writer = TextWriter.Synchronized(streamWriter);
 
             if (fileMode == FileMode.Create)
             {
