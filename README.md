@@ -35,9 +35,6 @@ AppVeyor is used as CI, so when code is pushed to this repo the solution will ge
 
 Ther also is a ```<outputProviders>``` that controls what output should be used.
 
-## Output to console
-![Example run on www.github.com](http://henrikm.com/content/images/2016/Feb/linkcrawler_example.PNG "Example run on www.github.com")
-
 ## Output to file
 ```LinkCrawler.exe >> crawl.log``` will save output to file.
 ![Slack](http://henrikm.com/content/images/2016/Feb/as-file.png "Output to file")
