@@ -8,7 +8,7 @@ namespace LinkCrawler.Utils.Outputs
     public class CsvOutput : IOutput, IDisposable
     {
         private readonly ISettings _settings;
-        private TextWriter _writer;
+        public TextWriter _writer;
 
         public CsvOutput(ISettings settings)
         {
@@ -21,9 +21,9 @@ namespace LinkCrawler.Utils.Outputs
             var fileMode = _settings.CsvOverwrite ? FileMode.Create : FileMode.Append;
             var file = new FileStream(_settings.CsvFilePath, fileMode, FileAccess.Write);
 
-            var streamWriter = new StreamWriter(file);
+            var streamWriter = new StreamWriter(file) {AutoFlush = true};
             _writer = TextWriter.Synchronized(streamWriter);
-
+            
             if (fileMode == FileMode.Create)
             {
                 _writer.WriteLine("Code{0}Status{0}Url{0}Referer", _settings.CsvDelimiter);
