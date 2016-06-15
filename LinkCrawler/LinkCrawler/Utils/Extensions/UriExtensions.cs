@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace LinkCrawler.Utils.Extensions
 {
@@ -8,8 +7,7 @@ namespace LinkCrawler.Utils.Extensions
         public static string RemoveSegments(this Uri uri)
         {
             var uriString = uri.ToString();
-            var segments = string.Join("/", uri.Segments.Where(x => x != "/"));
-
+            var segments = string.Join(string.Empty, uri.Segments);
             return uriString.TrimEnd(segments);
         }
     }
