@@ -12,7 +12,8 @@ namespace LinkCrawler.Utils.Parsers
         public ValidUrlParser(ISettings settings)
         {
             Regex = new Regex(settings.ValidUrlRegex);
-            BaseUrl = settings.BaseUrl;
+            var baseUri = new Uri(settings.BaseUrl);
+            BaseUrl = baseUri.RemoveSegments();
         }
 
         public bool Parse(string url, out string validUrl)

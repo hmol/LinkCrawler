@@ -7,7 +7,6 @@ using LinkCrawler.Utils.Settings;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using LinkCrawler.Utils.Outputs;
 
 namespace LinkCrawler
 {
