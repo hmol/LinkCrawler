@@ -42,13 +42,17 @@ namespace LinkCrawler
         {
             var requestModel = new RequestModel(crawlUrl, referrerUrl, BaseUrl);
             var restClient = new RestClient(new Uri(crawlUrl)) { FollowRedirects = false };
-
-            restClient.ExecuteAsync(RestRequest, response =>
+            requestModel.StopWatch.Start();
+            var x = restClient.ExecuteAsync(RestRequest, response =>
             {
                 if (response == null)
                     return;
-
-                var responseModel = new ResponseModel(response, requestModel, _settings);
+                requestModel.StopWatch.Stop();
+                var elapsedTimeSpan = requestModel.StopWatch.Elapsed;
+                var responseModel = new ResponseModel(response, requestModel, _settings)
+                {
+                    ElapsedTimeSpan = elapsedTimeSpan
+                };
                 ProcessResponse(responseModel);
             });
         }
