@@ -7,6 +7,8 @@ using LinkCrawler.Utils.Settings;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Diagnostics;
 
 namespace LinkCrawler
 {
@@ -20,6 +22,7 @@ namespace LinkCrawler
         public bool OnlyReportBrokenLinksToOutput { get; set; }
         public static List<string> VisitedUrlList { get; set; }
         private ISettings _settings;
+        private int counter = 0;
 
         public LinkCrawler(IEnumerable<IOutput> outputs, IValidUrlParser validUrlParser, ISettings settings)
         {
@@ -35,13 +38,26 @@ namespace LinkCrawler
 
         public void Start()
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             SendRequest(BaseUrl);
+            while (counter > 0)
+            {
+                Thread.Sleep(100);
+            }
+            sw.Stop();
+            foreach (var output in Outputs)
+            {
+                output.WriteInfo(String.Format("Elapsed {0:c}", sw.Elapsed));
+            }
         }
 
         public void SendRequest(string crawlUrl, string referrerUrl = "")
         {
             var requestModel = new RequestModel(crawlUrl, referrerUrl, BaseUrl);
             var restClient = new RestClient(new Uri(crawlUrl)) { FollowRedirects = false };
+
+            Interlocked.Increment(ref counter);
 
             restClient.ExecuteAsync(RestRequest, response =>
             {
@@ -59,6 +75,8 @@ namespace LinkCrawler
 
             if (responseModel.ShouldCrawl)
                 CrawlForLinksInResponse(responseModel);
+
+            Interlocked.Decrement(ref counter);
         }
 
         public void CrawlForLinksInResponse(IResponseModel responseModel)
