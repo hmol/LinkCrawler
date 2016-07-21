@@ -40,6 +40,11 @@ namespace LinkCrawler.Utils.Outputs
             Write(responseModel);
         }
 
+        public void WriteInfo(string info)
+        {
+            // Write nothing to csv
+        }
+
         private void Write(IResponseModel responseModel)
         {
             _writer?.WriteLine("{1}{0}{2}{0}{3}{0}{4}",

@@ -15,5 +15,11 @@ namespace LinkCrawler.Utils.Outputs
         {
             Console.WriteLine(responseModel.ToString());
         }
+
+        public void WriteInfo(string info)
+        {
+            Console.WriteLine(info);
+        }
+
     }
 }
