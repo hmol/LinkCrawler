@@ -35,13 +35,13 @@ namespace LinkCrawler
 
         public void Start()
         {
-            SendRequest(BaseUrl);
+            SendRequest(new LinkModel(BaseUrl));
         }
 
-        public void SendRequest(string crawlUrl, string referrerUrl = "")
+        public void SendRequest(LinkModel crawlLink, string referrerUrl = "")
         {
-            var requestModel = new RequestModel(crawlUrl, referrerUrl, BaseUrl);
-            var restClient = new RestClient(new Uri(crawlUrl)) { FollowRedirects = false };
+            var requestModel = new RequestModel(crawlLink.Url, referrerUrl, BaseUrl);
+            var restClient = new RestClient(new Uri(crawlLink.Url)) { FollowRedirects = false };
 
             restClient.ExecuteAsync(RestRequest, response =>
             {
@@ -49,6 +49,10 @@ namespace LinkCrawler
                     return;
 
                 var responseModel = new ResponseModel(response, requestModel, _settings);
+
+                if (!responseModel.IsSuccess)
+                    responseModel.InnerHtml = crawlLink.InnerHtml;
+
                 ProcessResponse(responseModel);
             });
         }
@@ -65,13 +69,13 @@ namespace LinkCrawler
         {
             var linksFoundInMarkup = MarkupHelpers.GetValidUrlListFromMarkup(responseModel.Markup, ValidUrlParser, CheckImages);
 
-            foreach (var url in linksFoundInMarkup)
+            foreach (var link in linksFoundInMarkup)
             {
-                if (VisitedUrlList.Contains(url))
+                if (VisitedUrlList.Contains(link.Url))
                     continue;
 
-                VisitedUrlList.Add(url);
-                SendRequest(url, responseModel.RequestedUrl);
+                VisitedUrlList.Add(link.Url);
+                SendRequest(link, responseModel.RequestedUrl);
             }
         }
 

@@ -3,32 +3,33 @@ using LinkCrawler.Utils.Parsers;
 using LinkCrawler.Utils.Settings;
 using System.Collections.Generic;
 using System.Linq;
+using LinkCrawler.Models;
 
 namespace LinkCrawler.Utils.Helpers
 {
     public static class MarkupHelpers
     {
-        private static List<string> GetAllUrlsFromHtmlDocument(string markup, string searchPattern, string attribute)
+        private static List<LinkModel> GetAllUrlsFromHtmlDocument(string markup, string searchPattern, string attribute)
         {
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(markup);
             var nodes = htmlDoc.DocumentNode.SelectNodes(searchPattern);
 
             if (nodes == null || !nodes.Any())
-                return new List<string>();
+                return new List<LinkModel>();
 
-            return nodes.Select(x => x.GetAttributeValue(attribute, string.Empty).TrimEnd('/')).ToList();
+            return nodes.Select(x => new LinkModel(x.GetAttributeValue(attribute, string.Empty).TrimEnd('/'), x.InnerHtml)).ToList();
         }
 
-        public static List<string> GetAllUrlsFromMarkup(string markup, bool checkImageTags)
+        public static List<LinkModel> GetAllUrlsFromMarkup(string markup, bool checkImageTags)
         {
-            var linkUrls = GetAllUrlsFromHtmlDocument(markup, Constants.Html.LinkSearchPattern, Constants.Html.Href);
+            var links = GetAllUrlsFromHtmlDocument(markup, Constants.Html.LinkSearchPattern, Constants.Html.Href);
             if (checkImageTags)
             {
                 var imgUrls = GetAllUrlsFromHtmlDocument(markup, Constants.Html.ImgSearchPattern, Constants.Html.Src);
-                linkUrls.AddRange(imgUrls);
+                links.AddRange(imgUrls);
             }
-            return linkUrls;
+            return links;
         }
 
         /// <summary>
@@ -36,20 +37,21 @@ namespace LinkCrawler.Utils.Helpers
         /// (i.e relative urls, urls with no sceme, mailto links..etc)
         /// </summary>
         /// <returns>List of urls that will work with restsharp for sending http get</returns>
-        public static List<string> GetValidUrlListFromMarkup(string markup, IValidUrlParser parser, bool checkImages)
+        public static List<LinkModel> GetValidUrlListFromMarkup(string markup, IValidUrlParser parser, bool checkImages)
         {
-            var urlList = GetAllUrlsFromMarkup(markup, checkImages);
-            var validUrlList = new List<string>();
+            var linkList = GetAllUrlsFromMarkup(markup, checkImages);
+            var validLinkList = new List<LinkModel>();
 
-            foreach (var url in urlList)
+            foreach (var link in linkList)
             {
-                string validUrl;
-                if (parser.Parse(url, out validUrl))
+                string validLink;
+                if (parser.Parse(link.Url, out validLink))
                 {
-                    validUrlList.Add(validUrl);
+                    link.Url = validLink;
+                    validLinkList.Add(link);
                 }
             }
-            return validUrlList;
+            return validLinkList;
         }
     }
 }
