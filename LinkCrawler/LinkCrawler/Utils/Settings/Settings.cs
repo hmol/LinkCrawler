@@ -39,6 +39,9 @@ namespace LinkCrawler.Utils.Settings
         public string CsvDelimiter =>
             ConfigurationManager.AppSettings[Constants.AppSettings.CsvDelimiter];
 
+        public bool PrintSummary =>
+            ConfigurationManager.AppSettings[Constants.AppSettings.PrintSummary].ToBool();
+
         public bool IsSuccess(HttpStatusCode statusCode)
         {
             var configuredCodes = ConfigurationManager.AppSettings[Constants.AppSettings.SuccessHttpStatusCodes] ?? "";
