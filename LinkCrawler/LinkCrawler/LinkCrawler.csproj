@@ -84,6 +84,7 @@
     <Compile Include="Utils\Outputs\CsvOutput.cs" />
     <Compile Include="Utils\Outputs\IOutput.cs" />
     <Compile Include="Utils\Outputs\SlackOutput.cs" />
+    <Compile Include="Utils\Settings\MockSettings.cs" />
     <Compile Include="Utils\StructureMapRegistry.cs" />
     <Compile Include="Utils\Extensions\RegexExtensions.cs" />
     <Compile Include="Utils\Helpers\ConsoleHelper.cs" />
