@@ -17,6 +17,7 @@
             public const string CsvDelimiter = "Csv.Delimiter";
             public const string SuccessHttpStatusCodes = "SuccessHttpStatusCodes";
             public const string OutputProviders = "outputProviders";
+            public const string PrintSummary = "PrintSummary";
         }
 
         public static class Response
