@@ -21,7 +21,7 @@ namespace LinkCrawler.Utils.Settings {
         public string SlackWebHookBotMessageFormat => "*Doh! There is a link not working* Url: {0} Statuscode: {1} The link is placed on this page: {2}";
 
         public string SlackWebHookBotName => "Homer Bot";
-
+        public bool PrintSummary => false;
         private bool IncludeWebHookUrl { get; set; }
         public string SlackWebHookUrl
         {
