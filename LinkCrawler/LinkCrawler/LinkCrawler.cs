@@ -110,7 +110,7 @@ namespace LinkCrawler
             }
 
             // Then check to see whether there are any pending links left to check
-            if(UrlList.Where(l => l.CheckingFinished == false).Count() == 0)
+            if ((UrlList.Count > 1) && (UrlList.Where(l => l.CheckingFinished == false).Count() == 0))
             {
                 FinaliseSession();
             }
@@ -121,11 +121,24 @@ namespace LinkCrawler
             this.timer.Stop();
             if (this._settings.PrintSummary)
             {
-                string message = @"
-Processing completed in " + this.timer.ElapsedMilliseconds.ToString() + "ms";
+                List<string> messages = new List<string>();
+                messages.Add(""); // add blank line to differentiate summary from main output
+
+                messages.Add("Processing complete. Checked " + UrlList.Count() + " links in " + this.timer.ElapsedMilliseconds.ToString() + "ms");
+
+                messages.Add("");
+                messages.Add(" Status | # Links");
+                messages.Add(" -------+--------");
+
+                IEnumerable<IGrouping<int, string>> StatusSummary = UrlList.GroupBy(link => link.StatusCode, link => link.Address);
+                foreach(IGrouping<int,string> statusGroup in StatusSummary)
+                {
+                    messages.Add(String.Format("   {0}  | {1,5}", statusGroup.Key, statusGroup.Count()));
+                }
+
                 foreach (var output in Outputs)
                 {
-                    output.WriteInfo(message);
+                    output.WriteInfo(messages.ToArray());
                 }
             }
         }
