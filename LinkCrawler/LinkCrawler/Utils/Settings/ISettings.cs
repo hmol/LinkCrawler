@@ -27,5 +27,7 @@ namespace LinkCrawler.Utils.Settings
         string CsvDelimiter { get; }
 
         bool IsSuccess(HttpStatusCode statusCode);
+
+        bool PrintSummary { get; }
     }
 }
