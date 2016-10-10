@@ -73,10 +73,13 @@ namespace LinkCrawler
 
             foreach (var url in linksFoundInMarkup)
             {
-                if (UrlList.Where(l => l.Address == url).Count() > 0)
-                    continue;
+                lock (UrlList)
+                {
+                    if (UrlList.Where(l => l.Address == url).Count() > 0)
+                        continue;
 
-                UrlList.Add(new LinkModel(url));
+                    UrlList.Add(new LinkModel(url));
+                }
                 SendRequest(url, responseModel.RequestedUrl);
             }
         }
@@ -103,16 +106,20 @@ namespace LinkCrawler
 
         private void CheckIfFinal(IResponseModel responseModel)
         {
-            // First set the status code for the completed link (this will set "CheckingFinished" to true)
-            foreach (LinkModel lm in UrlList.Where(l => l.Address == responseModel.RequestedUrl))
+            lock (UrlList)
             {
-                lm.StatusCode = responseModel.StatusCodeNumber;
-            }
 
-            // Then check to see whether there are any pending links left to check
-            if ((UrlList.Count > 1) && (UrlList.Where(l => l.CheckingFinished == false).Count() == 0))
-            {
-                FinaliseSession();
+                // First set the status code for the completed link (this will set "CheckingFinished" to true)
+                foreach (LinkModel lm in UrlList.Where(l => l.Address == responseModel.RequestedUrl))
+                {
+                    lm.StatusCode = responseModel.StatusCodeNumber;
+                }
+
+                // Then check to see whether there are any pending links left to check
+                if ((UrlList.Count > 1) && (UrlList.Where(l => l.CheckingFinished == false).Count() == 0))
+                {
+                    FinaliseSession();
+                }
             }
         }
 
