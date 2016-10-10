@@ -40,7 +40,7 @@ namespace LinkCrawler.Utils.Outputs
             Write(responseModel);
         }
 
-        public void WriteInfo(String Info)
+        public void WriteInfo(String[] Info)
         {
             // Do nothing - string info is only for console
         }

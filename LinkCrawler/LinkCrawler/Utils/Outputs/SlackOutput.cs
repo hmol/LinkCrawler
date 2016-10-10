@@ -22,7 +22,7 @@ namespace LinkCrawler.Utils.Outputs
             // Write nothing to Slack
         }
 
-        public void WriteInfo(string Info)
+        public void WriteInfo(string[] Info)
         {
             // Write nothing to Slack
         }

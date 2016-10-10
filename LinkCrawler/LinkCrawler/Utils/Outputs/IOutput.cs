@@ -6,6 +6,6 @@ namespace LinkCrawler.Utils.Outputs
     {
         void WriteError(IResponseModel responseModel);
         void WriteInfo(IResponseModel responseModel);
-        void WriteInfo(string InfoString);
+        void WriteInfo(string[] InfoString);
     }
 }
