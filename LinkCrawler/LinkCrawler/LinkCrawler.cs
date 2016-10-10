@@ -8,6 +8,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace LinkCrawler
 {
@@ -19,8 +20,7 @@ namespace LinkCrawler
         public IEnumerable<IOutput> Outputs { get; set; }
         public IValidUrlParser ValidUrlParser { get; set; }
         public bool OnlyReportBrokenLinksToOutput { get; set; }
-        public static List<string> VisitedUrlList { get; set; }
-        public static List<string> CompletedUrlList { get; set; }
+        public static List<LinkModel> UrlList;
         private ISettings _settings;
         private Stopwatch timer;
 
@@ -30,8 +30,7 @@ namespace LinkCrawler
             Outputs = outputs;
             ValidUrlParser = validUrlParser;
             CheckImages = settings.CheckImages;
-            VisitedUrlList = new List<string>();
-            CompletedUrlList = new List<string>();
+            UrlList = new List<LinkModel>();
             RestRequest = new RestRequest(Method.GET).SetHeader("Accept", "*/*");
             OnlyReportBrokenLinksToOutput = settings.OnlyReportBrokenLinksToOutput;
             _settings = settings;
@@ -41,7 +40,7 @@ namespace LinkCrawler
         public void Start()
         {
             this.timer.Start();
-            VisitedUrlList.Add(BaseUrl);
+            UrlList.Add(new LinkModel(BaseUrl));
             SendRequest(BaseUrl);
         }
 
@@ -74,10 +73,10 @@ namespace LinkCrawler
 
             foreach (var url in linksFoundInMarkup)
             {
-                if (VisitedUrlList.Contains(url))
+                if (UrlList.Where(l => l.Address == url).Count() > 0)
                     continue;
 
-                VisitedUrlList.Add(url);
+                UrlList.Add(new LinkModel(url));
                 SendRequest(url, responseModel.RequestedUrl);
             }
         }
@@ -104,12 +103,16 @@ namespace LinkCrawler
 
         private void CheckIfFinal(IResponseModel responseModel)
         {
-            if (!CompletedUrlList.Contains(responseModel.RequestedUrl))
+            // First set the status code for the completed link (this will set "CheckingFinished" to true)
+            foreach (LinkModel lm in UrlList.Where(l => l.Address == responseModel.RequestedUrl))
             {
-                CompletedUrlList.Add(responseModel.RequestedUrl);
+                lm.StatusCode = responseModel.StatusCodeNumber;
+            }
 
-                if ((CompletedUrlList.Count == VisitedUrlList.Count) && (VisitedUrlList.Count > 1))
-                    FinaliseSession();
+            // Then check to see whether there are any pending links left to check
+            if(UrlList.Where(l => l.CheckingFinished == false).Count() == 0)
+            {
+                FinaliseSession();
             }
         }
 
