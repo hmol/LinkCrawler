@@ -25,9 +25,15 @@ namespace LinkCrawler.Utils.Parsers
 
             Uri parsedUri;
 
-            if (Regex.IsNotMatch(url)
+            if (Regex.IsNotMatch(url) 
                 || !Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out parsedUri))
-                return false;
+            {
+                if (!(url.Contains("@")))
+                {
+                    return Parse(string.Concat(BaseUrl, "/", url), out validUrl);
+                }
+                return false;              
+            }
 
             if (parsedUri.IsAbsoluteUri)
             {
@@ -48,5 +54,7 @@ namespace LinkCrawler.Utils.Parsers
             }
             return false;
         }
+
+
     }
 }

@@ -46,5 +46,26 @@ namespace LinkCrawler.Tests.UtilsTests.HelpersTests
 
             Assert.That(parsed, Is.EqualTo(validUrl));
         }
+
+        [Test]
+        public void Parse_UrlOnlyLocalPath_True()
+        {
+            var relativeUrl = "home";
+            string parsed;
+            var result = ValidUrlParser.Parse(relativeUrl, out parsed);
+            Assert.That(result, Is.True);
+            var validUrl = string.Format("{0}/{1}", ValidUrlParser.BaseUrl, relativeUrl);
+
+            Assert.That(parsed, Is.EqualTo(validUrl));
+        }
+
+        [Test]
+        public void Parse_UrlOnlyEmailPath_False()
+        {
+            var relativeUrl = "mailto:name@email.com";
+            string parsed;
+            var result = ValidUrlParser.Parse(relativeUrl, out parsed);
+            Assert.That(result, Is.False);          
+        }
     }
 }
