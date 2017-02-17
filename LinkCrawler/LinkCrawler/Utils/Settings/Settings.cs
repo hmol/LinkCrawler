@@ -44,5 +44,12 @@ namespace LinkCrawler.Utils.Settings
             var configuredCodes = ConfigurationManager.AppSettings[Constants.AppSettings.SuccessHttpStatusCodes] ?? "";
             return statusCode.IsSuccess(configuredCodes);
         }
+
+        public string CouchbaseConnectionString =>
+            ConfigurationManager.AppSettings[Constants.AppSettings.CouchbaseConnectionString];
+        public string CouchbaseBucketName =>
+            ConfigurationManager.AppSettings[Constants.AppSettings.CouchbaseBucketName];
+        public string CouchbaseBucketPassword =>
+            ConfigurationManager.AppSettings[Constants.AppSettings.CouchbaseBucketPassword];
     }
 }
