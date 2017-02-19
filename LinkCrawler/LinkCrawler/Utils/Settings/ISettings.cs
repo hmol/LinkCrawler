@@ -27,5 +27,9 @@ namespace LinkCrawler.Utils.Settings
         string CsvDelimiter { get; }
 
         bool IsSuccess(HttpStatusCode statusCode);
+
+        string CouchbaseConnectionString { get; }
+        string CouchbaseBucketName { get; }
+        string CouchbaseBucketPassword { get; }
     }
 }

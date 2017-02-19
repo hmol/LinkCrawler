@@ -34,14 +34,22 @@ Clone repo :point_right: open solution in Visual Studio :point_right: build :fac
 ![Example run on www.github.com](http://henrikm.com/content/images/2016/Feb/linkcrawler_example.PNG "Example run on www.github.com")
 
 ## Output to file
-```LinkCrawler.exe >> crawl.log``` will save output to file.
+`LinkCrawler.exe >> crawl.log` will save output to file.
 ![Slack](http://henrikm.com/content/images/2016/Feb/as-file.png "Output to file")
 
 ## Output to slack
 If configured correctly, the defined slack-webhook will be notified about broken links.
 ![Slack](http://henrikm.com/content/images/2016/Feb/blurred1.jpg "Slack")
 
-##How I use it
+## Output to Couchbase
+[Couchbase Community](https://couchbase.com/downloads) is a free and open source NoSQL document database which stores data as JSON. The JSON Data can be queried with N1QL, which can be very handy when analyzing broken links.
+To use in LinkCrawler, make these changes to App.Config:
+* Uncomment the "Couchbase" setting in outputProviders
+* Set the "Couchbase.ConnectionString to the appropriate connection string (leave it as-is if you are running Couchbase locally)
+* Set the "Couchbase.BucketName" to the appropriate bucket name
+* Set the "Couchbase.BucketPassword" to the password on the bucket
+
+## How I use it
 I have it running as an Webjob in Azure, scheduled every 4 days. It will notify the slack-channel where the editors of the website dwells.
 
 Creating a webjob is simple. Just put your compiled project files (/bin/) inside a .zip, and upload it.

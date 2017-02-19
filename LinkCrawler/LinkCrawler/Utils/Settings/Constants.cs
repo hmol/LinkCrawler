@@ -17,6 +17,9 @@
             public const string CsvDelimiter = "Csv.Delimiter";
             public const string SuccessHttpStatusCodes = "SuccessHttpStatusCodes";
             public const string OutputProviders = "outputProviders";
+            public const string CouchbaseConnectionString = "Couchbase.ConnectionString";
+            public const string CouchbaseBucketName = "Couchbase.BucketName";
+            public const string CouchbaseBucketPassword = "Couchbase.BucketPassword";
         }
 
         public static class Response
