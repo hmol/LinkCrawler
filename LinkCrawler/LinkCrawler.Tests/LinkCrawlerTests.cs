@@ -5,6 +5,7 @@ using LinkCrawler.Utils.Parsers;
 using LinkCrawler.Utils.Settings;
 using Moq;
 using NUnit.Framework;
+using System.Linq;
 
 namespace LinkCrawler.Tests
 {
@@ -49,7 +50,7 @@ namespace LinkCrawler.Tests
             mockResponseModel.Setup(x => x.Markup).Returns(markup);
 
             LinkCrawler.CrawlForLinksInResponse(mockResponseModel.Object);
-            Assert.That(LinkCrawler.VisitedUrlList.Contains(url));
+            Assert.That(LinkCrawler.UrlList.Where(l=>l.Address == url).Count() > 0);
         }
     }
 }

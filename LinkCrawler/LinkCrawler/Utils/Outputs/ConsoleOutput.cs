@@ -13,12 +13,12 @@ namespace LinkCrawler.Utils.Outputs
 
         public void WriteInfo(IResponseModel responseModel)
         {
-            WriteInfo(responseModel.ToString());
+            WriteInfo(new string[] { responseModel.ToString() });
         }
 
-        public void WriteInfo(String Info)
+        public void WriteInfo(String[] Info)
         {
-            Console.WriteLine(Info);
+            foreach(string line in Info) Console.WriteLine(line);
         }
     }
 }
