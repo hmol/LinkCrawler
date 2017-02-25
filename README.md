@@ -31,7 +31,8 @@ AppVeyor is used as CI, so when code is pushed to this repo the solution will ge
 | ```Slack.WebHook.Bot.MessageFormat``` | String format message that will be sent to slack  	       |
 | ```Csv.FilePath```   				  | File path for the CSV file  	   |
 | ```Csv.Overwrite```   			  | Whether to overwrite or append (if file exists)  	       |
-| ```Csv.Delimiter   ```   			  | Delimiter between columns in the CSV file (like ',' or ';')  	       |
+| ```Csv.Delimiter```   			  | Delimiter between columns in the CSV file (like ',' or ';')  	       |
+| ```PrintSummary```   			  | If true, a summary will be printed when all links have been checked.  	       |
 
 Ther also is a ```<outputProviders>``` that controls what output should be used.
 

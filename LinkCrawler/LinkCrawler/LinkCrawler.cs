@@ -8,6 +8,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace LinkCrawler
 {
@@ -19,8 +20,7 @@ namespace LinkCrawler
         public IEnumerable<IOutput> Outputs { get; set; }
         public IValidUrlParser ValidUrlParser { get; set; }
         public bool OnlyReportBrokenLinksToOutput { get; set; }
-        public static List<string> VisitedUrlList { get; set; }
-        public static List<string> CompletedUrlList { get; set; }
+        public static List<LinkModel> UrlList;
         private ISettings _settings;
         private Stopwatch timer;
 
@@ -30,8 +30,7 @@ namespace LinkCrawler
             Outputs = outputs;
             ValidUrlParser = validUrlParser;
             CheckImages = settings.CheckImages;
-            VisitedUrlList = new List<string>();
-            CompletedUrlList = new List<string>();
+            UrlList = new List<LinkModel>();
             RestRequest = new RestRequest(Method.GET).SetHeader("Accept", "*/*");
             OnlyReportBrokenLinksToOutput = settings.OnlyReportBrokenLinksToOutput;
             _settings = settings;
@@ -41,7 +40,7 @@ namespace LinkCrawler
         public void Start()
         {
             this.timer.Start();
-            VisitedUrlList.Add(BaseUrl);
+            UrlList.Add(new LinkModel(BaseUrl));
             SendRequest(BaseUrl);
         }
 
@@ -74,10 +73,13 @@ namespace LinkCrawler
 
             foreach (var url in linksFoundInMarkup)
             {
-                if (VisitedUrlList.Contains(url))
-                    continue;
+                lock (UrlList)
+                {
+                    if (UrlList.Where(l => l.Address == url).Count() > 0)
+                        continue;
 
-                VisitedUrlList.Add(url);
+                    UrlList.Add(new LinkModel(url));
+                }
                 SendRequest(url, responseModel.RequestedUrl);
             }
         }
@@ -104,12 +106,20 @@ namespace LinkCrawler
 
         private void CheckIfFinal(IResponseModel responseModel)
         {
-            if (!CompletedUrlList.Contains(responseModel.RequestedUrl))
+            lock (UrlList)
             {
-                CompletedUrlList.Add(responseModel.RequestedUrl);
 
-                if ((CompletedUrlList.Count == VisitedUrlList.Count) && (VisitedUrlList.Count > 1))
+                // First set the status code for the completed link (this will set "CheckingFinished" to true)
+                foreach (LinkModel lm in UrlList.Where(l => l.Address == responseModel.RequestedUrl))
+                {
+                    lm.StatusCode = responseModel.StatusCodeNumber;
+                }
+
+                // Then check to see whether there are any pending links left to check
+                if ((UrlList.Count > 1) && (UrlList.Where(l => l.CheckingFinished == false).Count() == 0))
+                {
                     FinaliseSession();
+                }
             }
         }
 
@@ -118,11 +128,24 @@ namespace LinkCrawler
             this.timer.Stop();
             if (this._settings.PrintSummary)
             {
-                string message = @"
-Processing completed in " + this.timer.ElapsedMilliseconds.ToString() + "ms";
+                List<string> messages = new List<string>();
+                messages.Add(""); // add blank line to differentiate summary from main output
+
+                messages.Add("Processing complete. Checked " + UrlList.Count() + " links in " + this.timer.ElapsedMilliseconds.ToString() + "ms");
+
+                messages.Add("");
+                messages.Add(" Status | # Links");
+                messages.Add(" -------+--------");
+
+                IEnumerable<IGrouping<int, string>> StatusSummary = UrlList.GroupBy(link => link.StatusCode, link => link.Address);
+                foreach(IGrouping<int,string> statusGroup in StatusSummary)
+                {
+                    messages.Add(String.Format("   {0}  | {1,5}", statusGroup.Key, statusGroup.Count()));
+                }
+
                 foreach (var output in Outputs)
                 {
-                    output.WriteInfo(message);
+                    output.WriteInfo(messages.ToArray());
                 }
             }
         }
