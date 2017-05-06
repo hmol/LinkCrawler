@@ -1,6 +1,8 @@
 ﻿using LinkCrawler.Utils;
 using StructureMap;
 using System;
+using LinkCrawler.Utils.Parsers;
+using LinkCrawler.Utils.Settings;
 
 namespace LinkCrawler
 {
@@ -8,9 +10,18 @@ namespace LinkCrawler
     {
         static void Main(string[] args)
         {
+            
             using (var container = Container.For<StructureMapRegistry>())
             {
                 var linkCrawler = container.GetInstance<LinkCrawler>();
+                if (args != null)
+                {
+                    string parsed;
+                    var validUrlParser = new ValidUrlParser(new Settings());
+                    var result = validUrlParser.Parse(args[0], out parsed);
+                    if(result)
+                    linkCrawler.BaseUrl = parsed;
+                }
                 linkCrawler.Start();
                 Console.Read();
             }
