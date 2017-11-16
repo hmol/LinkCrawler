@@ -14,6 +14,8 @@ namespace LinkCrawler.Utils.Settings {
 
         public bool CsvOverwrite => true;
 
+        public string SqlLiteFilePath => @"C:\tmp\output.sqlite";
+
         public bool OnlyReportBrokenLinksToOutput => false;
 
         public string SlackWebHookBotIconEmoji => ":homer:";

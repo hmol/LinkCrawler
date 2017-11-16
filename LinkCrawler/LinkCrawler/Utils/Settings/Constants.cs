@@ -15,6 +15,7 @@
             public const string CsvFilePath = "Csv.FilePath";
             public const string CsvOverwrite = "Csv.Overwrite";
             public const string CsvDelimiter = "Csv.Delimiter";
+            public const string SqlLiteFilePath = "SqlLite.Filepath";
             public const string SuccessHttpStatusCodes = "SuccessHttpStatusCodes";
             public const string OutputProviders = "outputProviders";
             public const string PrintSummary = "PrintSummary";

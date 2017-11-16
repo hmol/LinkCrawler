@@ -39,6 +39,9 @@ namespace LinkCrawler.Utils.Settings
         public string CsvDelimiter =>
             ConfigurationManager.AppSettings[Constants.AppSettings.CsvDelimiter];
 
+        public string SqlLiteFilePath =>
+            ConfigurationManager.AppSettings[Constants.AppSettings.SqlLiteFilePath];
+
         public bool PrintSummary =>
             ConfigurationManager.AppSettings[Constants.AppSettings.PrintSummary].ToBool();
 
