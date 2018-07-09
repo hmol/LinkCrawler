@@ -118,5 +118,14 @@ namespace LinkCrawler.Tests.UtilsTests.ExtensionsTests
             var result = word.StartsWithIgnoreCase(letter);
             Assert.AreEqual(false, result);
         }
+
+        [Test]
+        public void StartsWithIgnoreCase_NullAndNull_True()
+        {
+            string word = null;
+            string letter = null;
+            var result = StringExtensions.StartsWithIgnoreCase(null, null);
+            Assert.AreEqual(true, result);
+        }
     }
 }
