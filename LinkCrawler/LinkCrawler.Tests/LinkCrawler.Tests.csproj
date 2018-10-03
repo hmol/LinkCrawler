@@ -53,7 +53,7 @@
     <Compile Include="UtilsTests\ClientsTests\SlackClientTests.cs" />
     <Compile Include="UtilsTests\ExtensionsTests\HttpStatusCodeExtensionsTests.cs" />
     <Compile Include="UtilsTests\ExtensionsTests\StringExtensionsTests.cs" />
-    <Compile Include="UtilsTests\HelpersTests\ValidUrlParserTests.cs" />
+    <Compile Include="UtilsTests\ParsersTests\ValidUrlParserTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\LinkCrawler\App.config">
@@ -69,6 +69,9 @@
       <Project>{db53303b-f9fb-4d77-b656-d05db0420e6a}</Project>
       <Name>LinkCrawler</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UtilsTests\HelpersTests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
