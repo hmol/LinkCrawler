@@ -1,6 +1,8 @@
 ﻿using LinkCrawler.Utils.Extensions;
 using System.Configuration;
 using System.Net;
+using System.Linq;
+using System;
 
 namespace LinkCrawler.Utils.Settings
 {
@@ -47,5 +49,12 @@ namespace LinkCrawler.Utils.Settings
             var configuredCodes = ConfigurationManager.AppSettings[Constants.AppSettings.SuccessHttpStatusCodes] ?? "";
             return statusCode.IsSuccess(configuredCodes);
         }
+
+        public bool FollowRedirects =>
+            ConfigurationManager.AppSettings["FollowRedirects"].ToBool();
+
+        public int[] FollowCodes =>
+            ConfigurationManager.AppSettings["FollowCodes"].ToString() != "" ? ConfigurationManager.AppSettings["FollowCodes"].Split(',').Select(Int32.Parse).ToArray() : new int[] { 301, 302 };
+
     }
 }

@@ -14,6 +14,7 @@ namespace LinkCrawler
             using (var container = Container.For<StructureMapRegistry>())
             {
                 var linkCrawler = container.GetInstance<LinkCrawler>();
+                Console.WriteLine(System.Configuration.ConfigurationManager.AppSettings["FollowRedirects"]);
                 if (args.Length >0)
                 {
                     string parsed;

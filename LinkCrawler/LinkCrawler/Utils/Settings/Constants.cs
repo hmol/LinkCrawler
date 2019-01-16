@@ -1,4 +1,6 @@
-﻿namespace LinkCrawler.Utils.Settings
+﻿using System;
+
+namespace LinkCrawler.Utils.Settings
 {
     public static class Constants
     {
@@ -18,6 +20,8 @@
             public const string SuccessHttpStatusCodes = "SuccessHttpStatusCodes";
             public const string OutputProviders = "outputProviders";
             public const string PrintSummary = "PrintSummary";
+            public const string FollowRedirects = "FollowRedirects";
+            public const string FollowCodes = "FollowCodes";
         }
 
         public static class Response
