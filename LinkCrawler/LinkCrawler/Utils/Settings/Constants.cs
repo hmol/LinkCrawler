@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LinkCrawler.Utils.Settings
+﻿namespace LinkCrawler.Utils.Settings
 {
     public static class Constants
     {
