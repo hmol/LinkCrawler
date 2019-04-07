@@ -33,6 +33,8 @@ AppVeyor is used as CI, so when code is pushed to this repo the solution will ge
 | ```Csv.Overwrite```   			  | Whether to overwrite or append (if file exists)  	       |
 | ```Csv.Delimiter```   			  | Delimiter between columns in the CSV file (like ',' or ';')  	       |
 | ```PrintSummary```   			  | If true, a summary will be printed when all links have been checked.  	       |
+| ```FollowRedirects```           | Boolean, if true the crawler will treat pages with HTTP response codes in ```FollowCodes``` as a redirect and follow them. | 
+| ```FollowCodes```               | Comma separated list of HTTP status codes to treat as a redirect. Default "301,302". | 
 
 Ther also is a ```<outputProviders>``` that controls what output should be used.
 

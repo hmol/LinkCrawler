@@ -29,5 +29,9 @@ namespace LinkCrawler.Utils.Settings
         bool IsSuccess(HttpStatusCode statusCode);
 
         bool PrintSummary { get; }
+
+        bool FollowRedirects { get; }
+
+        int[] FollowCodes { get; }
     }
 }
