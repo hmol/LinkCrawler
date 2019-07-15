@@ -4,13 +4,13 @@ using System.Net;
 namespace LinkCrawler.Utils.Settings {
     public class MockSettings : ISettings {
 
-        public string BaseUrl => "https://github.com";
+        public string BaseUrl => "http://texecon.com";
 
         public bool CheckImages => true;
 
         public string CsvDelimiter => ";";
 
-        public string CsvFilePath => @"C:\tmp\output.csv";
+        public string CsvFilePath => @"D:\TEMP\LinkCrawlerOutput.csv";
 
         public bool CsvOverwrite => true;
 

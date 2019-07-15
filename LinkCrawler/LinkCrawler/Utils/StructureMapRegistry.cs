@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using LinkCrawler.Utils.Outputs;
 using LinkCrawler.Utils.Settings;
+using StructureMap;
 using StructureMap.Configuration.DSL;
 using StructureMap.Graph;
 

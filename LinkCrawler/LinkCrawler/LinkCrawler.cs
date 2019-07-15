@@ -47,7 +47,7 @@ namespace LinkCrawler
         public void SendRequest(string crawlUrl, string referrerUrl = "")
         {
             var requestModel = new RequestModel(crawlUrl, referrerUrl, BaseUrl);
-            var restClient = new RestClient(new Uri(crawlUrl)) { FollowRedirects = false };
+            var restClient = new RestClient(new Uri(crawlUrl)) { FollowRedirects = true };
 
             restClient.ExecuteAsync(RestRequest, response =>
             {
