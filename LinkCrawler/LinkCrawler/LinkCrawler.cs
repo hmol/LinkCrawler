@@ -22,7 +22,7 @@ namespace LinkCrawler
         public bool OnlyReportBrokenLinksToOutput { get; set; }
         public static List<LinkModel> UrlList;
         private ISettings _settings;
-        private Stopwatch timer;
+        private Stopwatch _timer;
 
         public LinkCrawler(IEnumerable<IOutput> outputs, IValidUrlParser validUrlParser, ISettings settings)
         {
@@ -34,12 +34,12 @@ namespace LinkCrawler
             RestRequest = new RestRequest(Method.GET).SetHeader("Accept", "*/*");
             OnlyReportBrokenLinksToOutput = settings.OnlyReportBrokenLinksToOutput;
             _settings = settings;
-            this.timer = new Stopwatch();
+            _timer = new Stopwatch();
         }
 
         public void Start()
         {
-            this.timer.Start();
+            _timer.Start();
             UrlList.Add(new LinkModel(BaseUrl));
             SendRequest(BaseUrl);
         }
@@ -125,13 +125,13 @@ namespace LinkCrawler
 
         private void FinaliseSession()
         {
-            this.timer.Stop();
-            if (this._settings.PrintSummary)
+            _timer.Stop();
+            if (_settings.PrintSummary)
             {
                 List<string> messages = new List<string>();
                 messages.Add(""); // add blank line to differentiate summary from main output
 
-                messages.Add("Processing complete. Checked " + UrlList.Count() + " links in " + this.timer.ElapsedMilliseconds.ToString() + "ms");
+                messages.Add("Processing complete. Checked " + UrlList.Count() + " links in " + _timer.ElapsedMilliseconds.ToString() + "ms");
 
                 messages.Add("");
                 messages.Add(" Status | # Links");

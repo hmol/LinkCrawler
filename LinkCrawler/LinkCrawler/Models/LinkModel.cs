@@ -10,25 +10,25 @@ namespace LinkCrawler.Models
     {
         public string Address { get; private set; }
         public bool CheckingFinished { get; private set; }
-        private int _StatusCode;
+        private int _statusCode;
 
         public int StatusCode
         {
             get
             {
-                return _StatusCode;
+                return _statusCode;
             }
             set
             {
-                _StatusCode = value;
-                this.CheckingFinished = true;
+                _statusCode = value;
+                CheckingFinished = true;
             }
         }
 
-        public LinkModel (string Address)
+        public LinkModel (string address)
         {
-            this.Address = Address;
-            this.CheckingFinished = false;
+            Address = address;
+            CheckingFinished = false;
         }
 
     }
