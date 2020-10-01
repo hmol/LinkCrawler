@@ -5,6 +5,13 @@ using System.Text.RegularExpressions;
 
 namespace LinkCrawler.Utils.Parsers
 {
+    /// <summary>
+    /// Parses a given text to validate if it is a valid url.
+    /// 
+    /// Some kinds of relative URLs are converted to absolute urls.
+    /// You can count on either getting a valid absolute url from this
+    /// class or getting a valid = false.
+    /// </summary>
     public class ValidUrlParser : IValidUrlParser
     {
         public Regex Regex { get; set; }
@@ -34,18 +41,21 @@ namespace LinkCrawler.Utils.Parsers
                 validUrl = url;
                 return true;
             }
+
             if (url.StartsWith("//"))
             {
                 var newUrl = string.Concat("http:", url);
                 validUrl = newUrl;
                 return true;
             }
+
             if (url.StartsWith("/"))
             {
                 var newUrl = string.Concat(BaseUrl, url);
                 validUrl = newUrl;
                 return true;
             }
+
             return false;
         }
     }
