@@ -14,7 +14,7 @@ namespace LinkCrawler.Utils.Outputs
 
         public void WriteError(IResponseModel responseModel)
         {
-            _slackClient.NotifySlack(responseModel);
+           _slackClient.NotifySlack(responseModel);
         }
 
         public void WriteInfo(IResponseModel responseModel)

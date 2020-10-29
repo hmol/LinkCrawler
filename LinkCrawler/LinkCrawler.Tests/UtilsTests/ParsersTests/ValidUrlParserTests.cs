@@ -2,7 +2,7 @@
 using LinkCrawler.Utils.Settings;
 using NUnit.Framework;
 
-namespace LinkCrawler.Tests.UtilsTests.HelpersTests
+namespace LinkCrawler.Tests.UtilsTests.ParsersTests
 {
     [TestFixture]
     public class ValidUrlParserTests

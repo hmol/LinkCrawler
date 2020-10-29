@@ -118,5 +118,49 @@ namespace LinkCrawler.Tests.UtilsTests.ExtensionsTests
             var result = word.StartsWithIgnoreCase(letter);
             Assert.AreEqual(false, result);
         }
+
+        [Test]
+        public void TrimEnd_InputNull_Null()
+        {
+            string input = null;
+            string expected = null;
+
+            var actual = input.TrimEnd("");
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void TrimEnd_InputEndsWithSuffix_RemovesSuffix()
+        {
+            string input = "friend";
+            string expected = "fri";
+
+            var actual = input.TrimEnd("end");
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void TrimEnd_InputEndsWithSuffixDifferentCase_ReturnsOriginal()
+        {
+            string input = "friEND";
+            string expected = "friEND";
+
+            var actual = input.TrimEnd("end");
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void TrimEnd_InputEndsWithSuffixDifferentCase_ReturnsEmptyString()
+        {
+            string input = "friend";
+            string expected = string.Empty;
+
+            var actual = input.TrimEnd("friend");
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
