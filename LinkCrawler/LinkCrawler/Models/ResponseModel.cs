@@ -16,6 +16,7 @@ namespace LinkCrawler.Models
         public int StatusCodeNumber { get { return (int)StatusCode; } }
         public bool IsSuccess { get; }
         public bool ShouldCrawl { get; }
+        public TimeSpan ElapsedTimeSpan { get; set; }
 
         public ResponseModel(IRestResponse restResponse, RequestModel requestModel, ISettings settings)
         {
@@ -34,7 +35,7 @@ namespace LinkCrawler.Models
             if (!IsSuccess)
                 return string.Format("{0}\t{1}\t{2}{3}\tReferer:\t{4}", StatusCodeNumber, StatusCode, RequestedUrl, Environment.NewLine, ReferrerUrl);
 
-            return string.Format("{0}\t{1}\t{2}", StatusCodeNumber, StatusCode, RequestedUrl);
+            return string.Format("{0}\t{1}\t{2}\t{3}", StatusCodeNumber, StatusCode, RequestedUrl, ElapsedTimeSpan.ToString());
         }
     }
 }
