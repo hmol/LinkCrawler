@@ -21,6 +21,8 @@ namespace LinkCrawler
         public IValidUrlParser ValidUrlParser { get; set; }
         public bool OnlyReportBrokenLinksToOutput { get; set; }
         public static List<LinkModel> UrlList;
+        public bool FollowRedirects { get; set; }
+        public int[] FollowCodes { get; set; }
         private ISettings _settings;
         private Stopwatch timer;
 
@@ -33,6 +35,8 @@ namespace LinkCrawler
             UrlList = new List<LinkModel>();
             RestRequest = new RestRequest(Method.GET).SetHeader("Accept", "*/*");
             OnlyReportBrokenLinksToOutput = settings.OnlyReportBrokenLinksToOutput;
+            FollowRedirects = settings.FollowRedirects;
+            FollowCodes = settings.FollowCodes;
             _settings = settings;
             this.timer = new Stopwatch();
         }
@@ -44,17 +48,24 @@ namespace LinkCrawler
             SendRequest(BaseUrl);
         }
 
-        public void SendRequest(string crawlUrl, string referrerUrl = "")
+        public void SendRequest(string crawlUrl, string referrerUrl = "", bool followRedirects = false)
         {
             var requestModel = new RequestModel(crawlUrl, referrerUrl, BaseUrl);
-            var restClient = new RestClient(new Uri(crawlUrl)) { FollowRedirects = false };
-
+            var restClient = new RestClient(new Uri(crawlUrl)) { FollowRedirects = followRedirects };
             restClient.ExecuteAsync(RestRequest, response =>
             {
                 if (response == null)
                     return;
 
                 var responseModel = new ResponseModel(response, requestModel, _settings);
+                
+                if (FollowCodes.Contains(responseModel.StatusCodeNumber) && FollowRedirects)
+                {
+                    WriteOutput(responseModel);
+                    SendRequest(crawlUrl, referrerUrl, true);
+                    return;
+                }
+
                 ProcessResponse(responseModel);
             });
         }

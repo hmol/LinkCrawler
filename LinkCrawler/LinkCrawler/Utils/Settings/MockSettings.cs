@@ -37,6 +37,10 @@ namespace LinkCrawler.Utils.Settings {
             return statusCode.IsSuccess("1xx,2xx,3xx");
         }
 
+        public bool FollowRedirects => false;
+
+        public int[] FollowCodes => new int[] { 301, 302 };
+
         public MockSettings(bool includeWebHookUrl) {
             this.IncludeWebHookUrl = includeWebHookUrl;
         }
