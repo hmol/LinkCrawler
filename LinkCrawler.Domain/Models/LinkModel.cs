@@ -20,7 +20,7 @@
         public LinkModel(string Address, string? Referrer = null)
         {
             this.Address = Address;
-            this.Referrer = Referrer??Address;
+            this.Referrer = Referrer ?? Address;
             this.CheckingFinished = false;
         }
 

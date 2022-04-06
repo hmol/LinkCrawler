@@ -8,7 +8,7 @@ public class Settings : ISettings
         BaseUrl = GetConfigString(Constants.AppSettings.BaseUrl);
         CheckImages = GetConfigBool(Constants.AppSettings.CheckImages);
         PrintSummary = GetConfigBool(Constants.AppSettings.PrintSummary);
-        if(Outputs is null) Outputs = new List<IOutput>();
+        if (Outputs is null) Outputs = new List<IOutput>();
     }
 
     private static string GetConfigString(string configValue)
@@ -28,7 +28,7 @@ public class Settings : ISettings
         return statusCode.IsSuccess(configuredCodes);
     }
     public IEnumerable<IOutput> Outputs { get; set; }
-    
+
     public string BaseUrl { get; set; }
 
     public bool CheckImages { get; set; }

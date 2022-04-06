@@ -20,7 +20,7 @@ public class ResponseModel : IResponseModel
         IsSuccess = settings.IsSuccess(StatusCode);
         if (!IsSuccess)
             return;
-        Markup = restResponse.Content??string.Empty;
+        Markup = restResponse.Content ?? string.Empty;
         ShouldCrawl = IsSuccess && requestModel.IsInternalUrl && restResponse.IsHtmlDocument();
     }
 
