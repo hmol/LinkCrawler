@@ -17,7 +17,7 @@ public class ValidUrlParser : IValidUrlParser
         if (string.IsNullOrEmpty(url))
             return false;
 
-        if(url.Contains('#'))  url = url.Remove(url.LastIndexOf('#') );
+        if (url.Contains('#')) url = url.Remove(url.LastIndexOf('#'));
 
         if (Regex.IsNotMatch(url)
             || !Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out Uri? parsedUri))

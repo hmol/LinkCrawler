@@ -1,4 +1,5 @@
-﻿namespace LinkCrawler.Domain.Utils.Outputs;
+﻿
+namespace LinkCrawler.Domain.Utils.Outputs;
 
 public class ConsoleOutput : IOutput
 {
