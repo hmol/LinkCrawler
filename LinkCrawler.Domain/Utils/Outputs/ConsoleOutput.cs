@@ -2,7 +2,7 @@
 
 public class ConsoleOutput : IOutput
 {
-    public void WriteError(IResponseModel responseModel)
+    public async Task WriteErrorAsync(IResponseModel responseModel)
     {
         ConsoleHelper.WriteError(responseModel.ToString());
     }

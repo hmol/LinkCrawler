@@ -5,7 +5,7 @@ public class MockSettings : ISettings
 {
     public MockSettings()
     {
-        BaseUrl = "http://texecon.com";
+        BaseUrl = "https://travel.frogsfolly.com";
         CheckImages = true;
         PrintSummary = true;
     }
@@ -28,7 +28,7 @@ public class MockSettings : ISettings
 
     public string CsvDelimiter => ";";
 
-    public string CsvFilePath => @"D:\Test\LinkCrawlerOutput.csv";
+    public string CsvFilePath => @"C:\Test\LinkCrawlerOutput.csv";
 
     public bool CsvOverwrite => true;
 

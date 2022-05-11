@@ -10,9 +10,9 @@ public class SlackOutput : IOutput
         _slackClient = slackClient;
     }
 
-    public void WriteError(IResponseModel responseModel)
+    public async Task WriteErrorAsync(IResponseModel responseModel)
     {
-        _slackClient.NotifySlack(responseModel);
+        await _slackClient.NotifySlackAsync(responseModel);
     }
 
     public void WriteInfo(IResponseModel responseModel)

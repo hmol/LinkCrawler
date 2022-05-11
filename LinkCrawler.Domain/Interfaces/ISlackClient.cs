@@ -8,5 +8,5 @@ public interface ISlackClient
     string BotIcon { get; set; }
     string MessageFormat { get; set; }
     bool HasWebHookUrl { get; }
-    void NotifySlack(IResponseModel responseModel);
+    Task NotifySlackAsync(IResponseModel responseModel);
 }

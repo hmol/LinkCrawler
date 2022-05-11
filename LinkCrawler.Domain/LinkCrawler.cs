@@ -12,7 +12,7 @@
         {
             _settings = new Settings();
             ValidUrlParser = new ValidUrlParser(_settings);
-            RestRequest = new RestRequest(Method.GET).SetHeader("Accept", "*/*");
+            RestRequest = new RestRequest(Method.Get.ToString()).SetHeader("Accept", "*/*");
             this.timer = new Stopwatch();
 
         }
@@ -20,7 +20,7 @@
         {
             _settings = settings;
             ValidUrlParser = new ValidUrlParser(settings);
-            RestRequest = new RestRequest(Method.GET).SetHeader("Accept", "*/*");
+            RestRequest = new RestRequest(Method.Get.ToString()).SetHeader("Accept", "*/*");
             this.timer = new Stopwatch();
         }
 
@@ -103,11 +103,11 @@
                 CrawlForLinksInResponse(responseModel);
         }
 
-        private void SendRequest(string crawlUrl, string referrerUrl = "")
+        private async Task SendRequest(string crawlUrl, string referrerUrl = "")
         {
             var requestModel = new RequestModel(crawlUrl, referrerUrl, _settings.BaseUrl);
-            var restClient = new RestClient(new Uri(crawlUrl)) { FollowRedirects = true };
-            var response = restClient.Execute(RestRequest);
+            var restClient = new RestClient(new Uri(crawlUrl));
+            var response = await restClient.ExecuteAsync(RestRequest);
             Console.WriteLine($"Crawling URL:{crawlUrl}");
             if (response == null) return;
             var responseModel = new ResponseModel(response, requestModel, _settings);
@@ -120,7 +120,7 @@
             {
                 foreach (var output in _settings.Outputs)
                 {
-                    output.WriteError(responseModel);
+                    output.WriteErrorAsync(responseModel);
                 }
             }
             else if (!_settings.OnlyReportBrokenLinksToOutput)

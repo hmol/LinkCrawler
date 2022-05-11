@@ -20,7 +20,7 @@ public class CsvOutput : IOutput, IDisposable
         }
     }
 
-    public void WriteError(IResponseModel responseModel)
+    public async Task WriteErrorAsync(IResponseModel responseModel)
     {
         Write(responseModel);
     }

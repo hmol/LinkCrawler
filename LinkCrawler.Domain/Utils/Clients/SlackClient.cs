@@ -12,7 +12,7 @@ public class SlackClient : ISlackClient
         MessageFormat = settings.SlackWebHookBotMessageFormat;
     }
 
-    public void NotifySlack(IResponseModel responseModel)
+    public async Task  NotifySlackAsync(IResponseModel responseModel)
     {
         if (!HasWebHookUrl)
             return;
@@ -20,7 +20,7 @@ public class SlackClient : ISlackClient
         var message = string.Format(MessageFormat, responseModel.RequestedUrl, responseModel.StatusCodeNumber, responseModel.ReferrerUrl);
 
         var client = new RestClient(WebHookUrl);
-        var request = new RestRequest(Method.POST) { RequestFormat = DataFormat.Json };
+        var request = new RestRequest(Method.Post.ToString()) { RequestFormat = DataFormat.Json };
         request.AddBody(
             new
             {
@@ -30,7 +30,7 @@ public class SlackClient : ISlackClient
                 mrkdwn = true
             });
 
-        client.Execute(request);
+        await client.ExecuteAsync(request);
     }
 
     public string BotIcon { get; set; }
