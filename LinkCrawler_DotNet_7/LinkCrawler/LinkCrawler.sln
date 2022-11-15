@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkCrawler", "LinkCrawler\LinkCrawler.csproj", "{DD0C6451-84A7-4DA6-8BF5-32EB97BE32FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD0C6451-84A7-4DA6-8BF5-32EB97BE32FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD0C6451-84A7-4DA6-8BF5-32EB97BE32FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD0C6451-84A7-4DA6-8BF5-32EB97BE32FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD0C6451-84A7-4DA6-8BF5-32EB97BE32FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0815F252-9C5A-42C9-A1CC-743850B55836}
+	EndGlobalSection
+EndGlobal
