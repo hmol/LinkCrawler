@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using System.Diagnostics;
+using RestSharp;
 
 namespace LinkCrawler.Models
 {
@@ -8,6 +9,7 @@ namespace LinkCrawler.Models
         public string ReferrerUrl;
         public bool IsInternalUrl { get; set; }
         public RestClient Client;
+        public Stopwatch StopWatch;
 
         public RequestModel(string url, string referrerUrl, string baseUrl)
         {
@@ -15,6 +17,7 @@ namespace LinkCrawler.Models
             IsInternalUrl = url.StartsWith(baseUrl);
             ReferrerUrl = referrerUrl;
             Client = new RestClient(Url);
+            StopWatch = new Stopwatch();
         }
     }
 }
