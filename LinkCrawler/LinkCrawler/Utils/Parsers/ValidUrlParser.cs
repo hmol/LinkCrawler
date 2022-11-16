@@ -28,8 +28,8 @@ namespace LinkCrawler.Utils.Parsers
                 || !Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out parsedUri))
                 return false;
 
-            if (parsedUri.IsAbsoluteUri)
-            {
+			if (parsedUri.IsAbsoluteUri && parsedUri.IsWellFormedOriginalString()) //for Mac/mono compatibility- see https://github.com/dotnet/corefx/issues/22098
+			{
                 validUrl = url;
                 return true;
             }
