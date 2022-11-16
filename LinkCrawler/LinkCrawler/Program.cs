@@ -14,7 +14,7 @@ namespace LinkCrawler
             using (var container = Container.For<StructureMapRegistry>())
             {
                 var linkCrawler = container.GetInstance<LinkCrawler>();
-                if (args.Length >0)
+                if (args.Length > 0)
                 {
                     string parsed;
                     var validUrlParser = new ValidUrlParser(new Settings());
